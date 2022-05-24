@@ -35,3 +35,27 @@ This microservice is intended to be built locally and to be run like a conventio
 One may consider this project has to be suitable for a wide variety of applied areas and may use this prototype as: (1) a template for building a similar microservice, (2) for evolving it to make something more universal, or (3) to simply explore it and take out some snippets and techniques from it for *educational purposes*, etc.
 
 ---
+
+## Table of Contents
+
+* **[Building](#building)**
+* **[Running](#running)**
+
+## Building
+
+**Ubuntu Server (Ubuntu 20.04.4 LTS x86-64):** Install the necessary dependencies (`erlang-nox`, `rebar3`, `make`, `docker.io`):
+
+```
+$ sudo apt-get update && \
+  sudo apt-get install erlang-nox make docker.io -y
+...
+$ curl -sO https://s3.amazonaws.com/rebar3/rebar3        && \
+  chmod -v 700 rebar3 && ./rebar3 local install          && \
+  export PATH=/home/<vmusername>/.cache/rebar3/bin:$PATH && \
+  rm -vf rebar3
+...
+```
+
+## Running
+
+**TBD**
