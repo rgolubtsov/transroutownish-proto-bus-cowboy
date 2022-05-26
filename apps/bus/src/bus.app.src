@@ -1,0 +1,31 @@
+%
+% apps/bus/src/bus.app.src
+% =============================================================================
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.0.1
+% =============================================================================
+% A daemon written in Erlang/OTP, designed and intended to be run
+% as a microservice, implementing a simple urban bus routing prototype.
+% =============================================================================
+% Copyright (C) 2022 Radislav (Radicchio) Golubtsov
+%
+% (See the LICENSE file at the top of the source tree.)
+%
+
+{application, bus, [
+    {description,  "Urban bus routing microservice prototype."},
+    {vsn,          "0.0.1"},
+    {registered,   []},
+    {mod, {
+        bus_app,   []}
+    },
+    {applications, [
+        kernel,
+        stdlib
+    ]},
+    {env,          []},
+    {modules,      []},
+    {licenses,     ["MIT License"]},
+    {links,        []}
+]}.
+
+% vim:set nu et ts=4 sw=4:
