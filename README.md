@@ -43,7 +43,7 @@ One may consider this project has to be suitable for a wide variety of applied a
 
 ## Building
 
-**Ubuntu Server (Ubuntu 20.04.4 LTS x86-64):** Install the necessary dependencies (`erlang-nox`, `rebar3`, `make`, `docker.io`):
+The microservice is known to be built successfully under **Ubuntu Server (Ubuntu 20.04.4 LTS x86-64)**. Install the necessary dependencies (`erlang-nox`, `rebar3`, `make`, `docker.io`):
 
 ```
 $ sudo apt-get update && \
@@ -54,6 +54,18 @@ $ curl -sO https://s3.amazonaws.com/rebar3/rebar3        && \
   export PATH=/home/<vmusername>/.cache/rebar3/bin:$PATH && \
   rm -vf rebar3
 ...
+```
+
+**Build** the microservice using **Rebar3**:
+
+```
+$ rebar3 clean;   \
+  rebar3 as prod clean
+...
+$ rebar3 compile; \
+  rebar3 as prod compile
+...
+$ # TODO: rebar3 release
 ```
 
 ## Running
