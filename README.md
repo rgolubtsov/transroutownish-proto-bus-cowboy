@@ -65,7 +65,9 @@ $ rebar3 clean;   \
 $ rebar3 compile; \
   rebar3 as prod compile
 ...
-$ # TODO: rebar3 release
+$ rebar3 release; \
+  rebar3 as prod release
+...
 ```
 
 ## Running
