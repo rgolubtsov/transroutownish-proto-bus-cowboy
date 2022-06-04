@@ -11,16 +11,22 @@
 # (See the LICENSE file at the top of the source tree.)
 #
 
-SERV = *.beam
+BEAM = *.beam
+SERV = releases
 
 # Specify flags and other vars here.
 REBAR3 = rebar3
 ECHO   = @echo
 
-# Making the first target (the microservice itself).
-$(SERV):
+# Making the first target (BEAMs).
+$(BEAM):
 	$(REBAR3)         compile
 	$(REBAR3) as prod compile
+
+# Making the second target (releases).
+$(SERV):
+	$(REBAR3)         release
+	$(REBAR3) as prod release
 	$(ECHO)
 
 .PHONY: all clean
