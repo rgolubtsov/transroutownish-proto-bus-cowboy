@@ -11,20 +11,30 @@
 # (See the LICENSE file at the top of the source tree.)
 #
 
-BEAM = *.beam
-SERV = releases
+# Profile: "default" or "prod".
+PROF = prod
+
+EBIN = _build/$(PROF)/lib/bus/ebin
+BEAM = $(EBIN)/bus_app.beam \
+       $(EBIN)/bus_sup.beam
+
+APPS = apps/bus/src
+SRCS = $(APPS)/bus_app.erl \
+       $(APPS)/bus_sup.erl
+
+SERV = _build/$(PROF)/rel/bus/lib
 
 # Specify flags and other vars here.
 REBAR3 = rebar3
 ECHO   = @echo
 
 # Making the first target (BEAMs).
-$(BEAM):
+$(BEAM): $(SRCS)
 	$(REBAR3)         compile
 	$(REBAR3) as prod compile
 
 # Making the second target (releases).
-$(SERV):
+$(SERV): $(BEAM)
 	$(REBAR3)         release
 	$(REBAR3) as prod release
 	$(ECHO)
