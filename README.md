@@ -70,6 +70,17 @@ $ rebar3 release; \
 ...
 ```
 
+Or **build** the microservice using **GNU Make** (optional, but for convenience &mdash; it covers the same **Rebar3** build workflow under the hood):
+
+```
+$ make clean
+...
+$ make      # <== Compilation phase.
+...
+$ make all  # <== Assembling releases of the microservice.
+...
+```
+
 ## Running
 
 **TBD**
