@@ -3,6 +3,8 @@
 **A daemon written in Erlang/OTP, designed and intended to be run as a microservice,
 <br />implementing a simple urban bus routing prototype**
 
+(*This is a work in progress &mdash; please wait for a while...*)
+
 This project is a *direct* **[Erlang](https://erlang.org "Real-time, concurrent and distributed functional language")** port of the earlier developed **urban bus routing prototype**, written in Java using **[Spring Boot](https://spring.io/projects/spring-boot "Stand-alone Spring apps builder and runner")** framework, and tailored to be run as a microservice in a Docker container. The following description of the underlying architecture and logics has been taken **[from there](https://github.com/rgolubtsov/transroutownish-proto-bus-spring-boot)** as is, without any modifications or adjustment.
 
 Consider an IoT system that aimed at planning and forming a specific bus route for a hypothetical passenger. One crucial part of such system is a **module**, that is responsible for filtering bus routes between two arbitrary bus stops where a direct route is actually present and can be easily found. Imagine there is a fictional urban public transportation agency that provides a wide series of bus routes, which covered large city areas, such that they are consisting of many bus stop points in each route. Let's name this agency **Trans-RoutE-Townish Co., Ltd.** or in the Net representation &mdash; **transroutownish.com**, hence the name of the project.
@@ -43,7 +45,7 @@ One may consider this project has to be suitable for a wide variety of applied a
 
 ## Building
 
-The microservice is known to be built successfully under **Ubuntu Server (Ubuntu 20.04.4 LTS x86-64)**. Install the necessary dependencies (`erlang-nox`, `rebar3`, `make`, `docker.io`):
+The microservice is known to be built and run successfully under **Ubuntu Server (Ubuntu 20.04.4 LTS x86-64)**. Install the necessary dependencies (`erlang-nox`, `rebar3`, `make`, `docker.io`):
 
 ```
 $ sudo apt-get update && \
@@ -82,5 +84,12 @@ $ make all  # <== Assembling releases of the microservice.
 ```
 
 ## Running
+
+**Run** the microservice using its startup script along with the `foreground` command, that is meant "*Start release with output to stdout*":
+
+```
+$ ./_build/prod/rel/bus/bin/bus foreground; echo $?
+...
+```
 
 **TBD**
