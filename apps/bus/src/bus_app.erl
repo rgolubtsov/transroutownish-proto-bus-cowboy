@@ -22,7 +22,18 @@
 
 -export([start/2, stop/1]).
 
+% Helper constants.
+-define(NEW_LINE, "\n").
+
+% Common notification messages.
+-define(MSG_WORK_IN_PROGRESS, "This is a work in progress - "
+                           ++ "please wait for a while...").
+
 start(_StartType, _StartArgs) ->
+    io:put_chars(?NEW_LINE ++ ?MSG_WORK_IN_PROGRESS
+              ++ ?NEW_LINE
+              ++ ?NEW_LINE),
+
     bus_sup:start_link().
 
 stop(_State) ->
