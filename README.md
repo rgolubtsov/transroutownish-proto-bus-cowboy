@@ -92,4 +92,11 @@ $ ./_build/prod/rel/bus/bin/bus foreground; echo $?
 ...
 ```
 
+The microservice then can be stopped, again by using its startup script along with the `stop` command, that is meant "*Stop the running node*". It should be issued in another terminal session, not the current one:
+
+```
+$ ./_build/prod/rel/bus/bin/bus stop; echo $?
+0
+```
+
 **TBD**
