@@ -45,15 +45,29 @@ One may consider this project has to be suitable for a wide variety of applied a
 
 ## Building
 
-The microservice is known to be built and run successfully under **Ubuntu Server (Ubuntu 20.04.4 LTS x86-64)**. Install the necessary dependencies (`erlang-nox`, `rebar3`, `make`, `docker.io`):
+The microservice is known to be built and run successfully under **Ubuntu Server (Ubuntu 22.04.1 LTS x86-64)** and **Arch Linux**. Install the necessary dependencies (`erlang-nox`, `rebar3`, `make`, `docker.io`):
+
+* In Ubuntu Server:
 
 ```
 $ sudo apt-get update && \
   sudo apt-get install erlang-nox make docker.io -y
 ...
-$ curl -sO https://s3.amazonaws.com/rebar3/rebar3        && \
-  chmod -v 700 rebar3 && ./rebar3 local install          && \
-  export PATH=/home/<vmusername>/.cache/rebar3/bin:$PATH && \
+```
+
+* In Arch Linux:
+
+```
+$ sudo pacman -Syu erlang-nox make docker
+...
+```
+
+Rebar3 is preferred to install everywhere the same way:
+
+```
+$ curl -sO https://s3.amazonaws.com/rebar3/rebar3      && \
+  chmod -v 700 rebar3 && ./rebar3 local install        && \
+  export PATH=/home/<username>/.cache/rebar3/bin:$PATH && \
   rm -vf rebar3
 ...
 ```
