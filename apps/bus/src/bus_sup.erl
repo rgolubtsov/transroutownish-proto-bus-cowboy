@@ -3,8 +3,8 @@
 % =============================================================================
 % Urban bus routing microservice prototype (Erlang/OTP port). Version 0.0.1
 % =============================================================================
-% A daemon written in Erlang/OTP, designed and intended to be run
-% as a microservice, implementing a simple urban bus routing prototype.
+% An Erlang/OTP application, designed and intended to be run as a microservice,
+% implementing a simple urban bus routing prototype.
 % =============================================================================
 % Copyright (C) 2022 Radislav (Radicchio) Golubtsov
 %
