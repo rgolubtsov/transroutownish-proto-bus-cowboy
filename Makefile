@@ -31,12 +31,17 @@ ECHO   = @echo
 # Making the first target (BEAMs).
 $(BEAM): $(SRCS)
 	$(REBAR3)         compile
+	$(ECHO)
 	$(REBAR3) as prod compile
+	$(ECHO)
 
 # Making the second target (releases).
 $(SERV): $(BEAM)
 	$(REBAR3)         release
+	$(ECHO)
+	$(ECHO)
 	$(REBAR3) as prod release
+	$(ECHO)
 	$(ECHO)
 
 .PHONY: all clean
