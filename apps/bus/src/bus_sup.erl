@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_sup.erl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.0.1
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.0.2
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -11,46 +11,49 @@
 % (See the LICENSE file at the top of the source tree.)
 %
 
-%%%-------------------------------------------------------------------
-%% @doc bus top level supervisor.
+%% ----------------------------------------------------------------------------
+%% @doc The supervisor module of the application.
+%%
+%% @version 0.0.2
+%% @since   0.0.1
 %% @end
-%%%-------------------------------------------------------------------
-
+%% ----------------------------------------------------------------------------
 -module(bus_sup).
 
 -behaviour(supervisor).
 
--export([start_link/0]).
-
--export([init/1]).
+-export([start_link/0, init/1]).
 
 -define(SERVER, ?MODULE).
 
+%% ----------------------------------------------------------------------------
+%% @doc Creates the supervisor process as part of a supervision tree.
+%%
+%% @returns The tuple containing the PID of the supervisor created
+%%          and the `State' indicator (defaults to an empty list).
 start_link() ->
     supervisor:start_link({local, ?SERVER}, ?MODULE, []).
 
-% sup_flags() = #{
-%     strategy  => strategy(),        % optional
-%     intensity => non_neg_integer(), % optional
-%     period    => pos_integer()      % optional
-% }
-% child_spec() = #{
-%     id       => child_id(), % mandatory
-%     start    => mfargs(),   % mandatory
-%     restart  => restart(),  % optional
-%     shutdown => shutdown(), % optional
-%     type     => worker(),   % optional
-%     modules  => modules()   % optional
-% }
-
+%% ----------------------------------------------------------------------------
+%% @doc The supervisor initialization callback.
+%%      Gets called after the supervisor is started.
+%%      Defines configuration for the supervisor
+%%      and specifications of child processes.
+%%
+%% @returns The tuple containing configuration for the supervisor
+%%          and specifications of child processes.
 init([]) ->
     SupFlags = #{
-        strategy  => one_for_all,
-        intensity => 0,
-        period    => 1
+        strategy  => one_for_all, % Defaults to "one_for_one".
+        intensity => 0,           % Defaults to 1 restart.
+        period    => 1            % Defaults to 5 seconds.
     },
-    ChildSpecs = [], {ok, {SupFlags, ChildSpecs}}.
 
-%% internal functions
+    ChildSpecs = [], % <== No any particular specs; relying on the defaults.
+
+    {ok, {
+        SupFlags,
+        ChildSpecs
+    }}.
 
 % vim:set nu et ts=4 sw=4:
