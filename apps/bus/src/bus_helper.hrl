@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_helper.hrl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.0.1
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.0.2
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -14,7 +14,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc The helper header file for the application.
 %%
-%% @version 0.0.1
+%% @version 0.0.2
 %% @since   0.0.1
 %% @end
 %% ----------------------------------------------------------------------------
