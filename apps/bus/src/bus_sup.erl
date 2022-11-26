@@ -44,12 +44,12 @@ start_link() ->
 %%          and specifications of child processes.
 init([]) ->
     SupFlags = #{
-        strategy  => one_for_all,
-        intensity => 0,
-        period    => 1
+        strategy  => one_for_all, % Defaults to "one_for_one".
+        intensity => 0,           % Defaults to 1 restart.
+        period    => 1            % Defaults to 5 seconds.
     },
 
-    ChildSpecs = [],
+    ChildSpecs = [], % <== No any particular specs; relying on the defaults.
 
     {ok, {
         SupFlags,
