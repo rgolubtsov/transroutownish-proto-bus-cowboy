@@ -36,7 +36,7 @@
 %% @returns The tuple containing the PID of the top supervisor
 %%          and the `State' indicator (defaults to an empty list).
 start(_StartType, _StartArgs) ->
-    io:put_chars(?NEW_LINE ++ ?MSG_WORK_IN_PROGRESS ++ ?NEW_LINE ++ ?NEW_LINE),
+    io:put_chars(?NEW_LINE ?MSG_WORK_IN_PROGRESS ?NEW_LINE ?NEW_LINE),
 
     bus_sup:start_link().
 
