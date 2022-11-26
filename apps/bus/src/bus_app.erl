@@ -12,7 +12,10 @@
 %
 
 %% ----------------------------------------------------------------------------
-%% @doc The main module of the application.
+%% @doc The callback module of the application.
+%%
+%% @version 0.0.1
+%% @since   0.0.1
 %% @end
 %% ----------------------------------------------------------------------------
 -module(bus_app).
@@ -23,11 +26,26 @@
 
 -include("bus_helper.hrl").
 
+%% ----------------------------------------------------------------------------
+%% @doc The application entry point callback.
+%%      Creates the supervision tree by starting the top supervisor.
+%%
+%% @param _StartType The atom `normal'.
+%% @param _StartArgs The list of start arguments.
+%%
+%% @returns The tuple containing the PID of the top supervisor
+%%          and the `State' indicator (defaults to an empty list).
 start(_StartType, _StartArgs) ->
     io:put_chars(?NEW_LINE ++ ?MSG_WORK_IN_PROGRESS ++ ?NEW_LINE ++ ?NEW_LINE),
 
     bus_sup:start_link().
 
+%% ----------------------------------------------------------------------------
+%% @doc The application termination callback.
+%%      Gets called after the application has been stopped.
+%%      Currently does nothing.
+%%
+%% @param _State The `State' indicator, as returned from the `start' callback.
 stop(_State) ->
     ok.
 

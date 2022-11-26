@@ -13,9 +13,11 @@
 
 %% ----------------------------------------------------------------------------
 %% @doc The supervisor module of the application.
+%%
+%% @version 0.0.1
+%% @since   0.0.1
 %% @end
 %% ----------------------------------------------------------------------------
-
 -module(bus_sup).
 
 -behaviour(supervisor).
@@ -24,9 +26,22 @@
 
 -define(SERVER, ?MODULE).
 
+%% ----------------------------------------------------------------------------
+%% @doc Creates the supervisor process as part of a supervision tree.
+%%
+%% @returns The tuple containing the PID of the supervisor created
+%%          and the `State' indicator (defaults to an empty list).
 start_link() ->
     supervisor:start_link({local, ?SERVER}, ?MODULE, []).
 
+%% ----------------------------------------------------------------------------
+%% @doc The supervisor initialization callback.
+%%      Gets called after the supervisor is started.
+%%      Defines configuration for the supervisor
+%%      and specifications of child processes.
+%%
+%% @returns The tuple containing configuration for the supervisor
+%%          and specifications of child processes.
 init([]) ->
     SupFlags = #{
         strategy  => one_for_all,
