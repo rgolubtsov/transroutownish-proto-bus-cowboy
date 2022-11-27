@@ -39,15 +39,15 @@ start(_StartType, _StartArgs) ->
 %   io:put_chars(?NEW_LINE ?MSG_WORK_IN_PROGRESS ?NEW_LINE ?NEW_LINE),
     io:nl(), io:put_chars(?MSG_WORK_IN_PROGRESS), io:nl(), io:nl(),
 
+    % Getting the application settings.
+    Settings = get_settings(),
+
+    AppDescription  = element(1, Settings),
+    ServerPort      = element(2, Settings),
+    DebugLogEnabled = element(3, Settings),
+    Datastore       = element(4, Settings),
+
     %% --- Debug output - Begin -----------------------------------------------
-    AppDescription  = element(2, application:get_key(description         )),
-    ServerPort      = element(2, application:get_env(server_port         )),
-    DebugLogEnabled = element(2, application:get_env(logger_debug_enabled)),
-
-    Datastore = element(2, application:get_env(routes_datastore_path_prefix))
-             ++ element(2, application:get_env(routes_datastore_path_dir   ))
-             ++ element(2, application:get_env(routes_datastore_filename   )),
-
     io:put_chars(                AppDescription  ), io:nl(),
     io:put_chars(integer_to_list(ServerPort     )), io:nl(),
     io:put_chars(   atom_to_list(DebugLogEnabled)), io:nl(),
