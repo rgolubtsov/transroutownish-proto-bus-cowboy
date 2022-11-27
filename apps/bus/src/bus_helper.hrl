@@ -26,4 +26,20 @@
 -define(MSG_WORK_IN_PROGRESS, "This is a work in progress - "
                            ++ "please wait for a while...").
 
+% -----------------------------------------------------------------------------
+% Helper function. Used to get the application settings.
+%
+% Returns: The tuple containing values of individual settings.
+get_settings() ->
+    {
+        element(2, application:get_key(description         )),
+        element(2, application:get_env(server_port         )),
+        element(2, application:get_env(logger_debug_enabled)),
+
+        % The path and filename of the routes data store (as 4th tuple elem).
+        element(2, application:get_env(routes_datastore_path_prefix))
+     ++ element(2, application:get_env(routes_datastore_path_dir   ))
+     ++ element(2, application:get_env(routes_datastore_filename   ))
+    }.
+
 % vim:set nu et ts=4 sw=4:
