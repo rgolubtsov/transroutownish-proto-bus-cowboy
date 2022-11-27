@@ -36,7 +36,22 @@
 %% @returns The tuple containing the PID of the top supervisor
 %%          and the `State' indicator (defaults to an empty list).
 start(_StartType, _StartArgs) ->
-    io:put_chars(?NEW_LINE ++ ?MSG_WORK_IN_PROGRESS ++ ?NEW_LINE ++ ?NEW_LINE),
+    io:put_chars(?NEW_LINE ?MSG_WORK_IN_PROGRESS ?NEW_LINE ?NEW_LINE),
+
+    %% --- Debug output - Begin -----------------------------------------------
+    AppDescription  = element(2, application:get_key(description         )),
+    ServerPort      = element(2, application:get_env(server_port         )),
+    DebugLogEnabled = element(2, application:get_env(logger_debug_enabled)),
+
+    Datastore = element(2, application:get_env(routes_datastore_path_prefix))
+             ++ element(2, application:get_env(routes_datastore_path_dir   ))
+             ++ element(2, application:get_env(routes_datastore_filename   )),
+
+    io:put_chars(                AppDescription   ++ ?NEW_LINE          ),
+    io:put_chars(integer_to_list(ServerPort     ) ++ ?NEW_LINE          ),
+    io:put_chars(   atom_to_list(DebugLogEnabled) ++ ?NEW_LINE          ),
+    io:put_chars(                Datastore        ++ ?NEW_LINE ?NEW_LINE),
+    %% --- Debug output - End -------------------------------------------------
 
     bus_sup:start_link().
 

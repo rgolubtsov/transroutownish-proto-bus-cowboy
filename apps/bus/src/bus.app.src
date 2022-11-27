@@ -14,18 +14,27 @@
 {application, bus, [
     {description,  "Urban bus routing microservice prototype."},
     {vsn,          "0.0.2"},
+    {licenses,     ["MIT License"]},
+    {links,        []},
+    {modules,      []},
     {registered,   []},
-    {mod, {
-        bus_app,   []}
-    },
     {applications, [
         kernel,
         stdlib
     ]},
-    {env,          []},
-    {modules,      []},
-    {licenses,     ["MIT License"]},
-    {links,        []}
+    {mod, {
+        bus_app,   []}
+    },
+    {env,          [
+        {server_port, 8765},
+
+        % Set to "yes" to enable debug logging.
+        {logger_debug_enabled, no},
+
+        {routes_datastore_path_prefix, "./"        },
+        {routes_datastore_path_dir,    "data/"     },
+        {routes_datastore_filename,    "routes.txt"}
+    ]}
 ]}.
 
 % vim:set nu et ts=4 sw=4:
