@@ -23,18 +23,24 @@
 -define(NEW_LINE, "\n").
 
 % Common notification messages.
--define(MSG_WORK_IN_PROGRESS, "This is a work in progress - "
-                           ++ "please wait for a while...").
+-define(MSG_WORK_IN_PROGRESS, "This is a work in progress"
+                        " - " "please wait for a while...").
 
 % -----------------------------------------------------------------------------
 % Helper function. Used to get the application settings.
 %
 % Returns: The tuple containing values of individual settings.
 get_settings() ->
+    DebugLogEnabled_ = application:get_env(logger_debug_enabled),
+
+    DebugLogEnabled  = if (DebugLogEnabled_ =/= undefined) ->
+        if (element(2, DebugLogEnabled_) =:= yes) -> true; (true) -> false end;
+                                                           (true) -> false end,
+
     {
-        element(2, application:get_key(description         )),
-        element(2, application:get_env(server_port         )),
-        element(2, application:get_env(logger_debug_enabled)),
+        element(2, application:get_key(description)),
+        element(2, application:get_env(server_port)),
+        DebugLogEnabled, % <== "true" or "false".
 
         % The path and filename of the routes data store (as 4th tuple elem).
         element(2, application:get_env(routes_datastore_path_prefix))
