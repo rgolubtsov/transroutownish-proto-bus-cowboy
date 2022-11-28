@@ -46,10 +46,12 @@ start(_StartType, _StartArgs) ->
     DebugLogEnabled = element(2, Settings),
     Datastore       = element(3, Settings),
 
+    % Slurping routes from the routes data store.
+    Routes = element(2, file:read_file(
+                        filename:join (code:priv_dir(bus), Datastore))),
+
     %% --- Debug output - Begin -----------------------------------------------
-    io:put_chars(integer_to_list(ServerPort     )), io:nl(),
-    io:put_chars(   atom_to_list(DebugLogEnabled)), io:nl(),
-    io:put_chars(                Datastore       ), io:nl(), io:nl(),
+    io:put_chars(Routes),
     %% --- Debug output - End -------------------------------------------------
 
     bus_sup:start_link().
