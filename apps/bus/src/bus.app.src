@@ -28,8 +28,8 @@
     {env,          [
         {server_port, 8765},
 
-        % Set to "yes" to enable debug logging.
-        {logger_debug_enabled, no},
+        % Uncomment this setting to enable debug logging.
+%       {logger_debug_enabled, yes},
 
         {routes_datastore_path_prefix, "./"        },
         {routes_datastore_path_dir,    "data/"     },
