@@ -42,13 +42,11 @@ start(_StartType, _StartArgs) ->
     % Getting the application settings.
     Settings = get_settings(),
 
-    AppDescription  = element(1, Settings),
-    ServerPort      = element(2, Settings),
-    DebugLogEnabled = element(3, Settings),
-    Datastore       = element(4, Settings),
+    ServerPort      = element(1, Settings),
+    DebugLogEnabled = element(2, Settings),
+    Datastore       = element(3, Settings),
 
     %% --- Debug output - Begin -----------------------------------------------
-    io:put_chars(                AppDescription  ), io:nl(),
     io:put_chars(integer_to_list(ServerPort     )), io:nl(),
     io:put_chars(   atom_to_list(DebugLogEnabled)), io:nl(),
     io:put_chars(                Datastore       ), io:nl(), io:nl(),

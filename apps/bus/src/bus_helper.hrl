@@ -38,11 +38,10 @@ get_settings() ->
                                                            (true) -> false end,
 
     {
-        element(2, application:get_key(description)),
         element(2, application:get_env(server_port)),
         DebugLogEnabled, % <== "true" or "false".
 
-        % The path and filename of the routes data store (as 4th tuple elem).
+        % The path and filename of the routes data store (as 3rd tuple elem).
         element(2, application:get_env(routes_datastore_path_prefix))
      ++ element(2, application:get_env(routes_datastore_path_dir   ))
      ++ element(2, application:get_env(routes_datastore_filename   ))
