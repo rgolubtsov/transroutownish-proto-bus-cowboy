@@ -27,6 +27,12 @@
 -include("bus_helper.hrl").
 
 %% ----------------------------------------------------------------------------
+%% @doc The regex pattern for the element to be excluded from a bus stops
+%%      sequence: it is an arbitrary identifier of a route,
+%%      which is not used in the routes processing anyhow.
+-define(ROUTE_ID_REGEX, "^\\d+").
+
+%% ----------------------------------------------------------------------------
 %% @doc The application entry point callback.
 %%      Creates the supervision tree by starting the top supervisor.
 %%
@@ -47,11 +53,18 @@ start(_StartType, _StartArgs) ->
     Datastore       = element(3, Settings),
 
     % Slurping routes from the routes data store.
-    Routes = element(2, file:read_file(
-                        filename:join (code:priv_dir(bus), Datastore))),
+    Routes = string:split(
+        element(2,file:read_file(filename:join(code:priv_dir(bus),Datastore))),
+    ?NEW_LINE, all),
+
+    RoutesList = lists:foldl(fun(Route, Routes_) ->
+        lists:append([Routes_, [
+           re:replace(Route, ?ROUTE_ID_REGEX, ?EMPTY_STRING, [{return, list}])
+        ++ ?SPACE]])
+    end, [], Routes),
 
     %% --- Debug output - Begin -----------------------------------------------
-    io:put_chars(Routes),
+    io:put_chars(RoutesList ++ ?V_BAR), io:nl(), io:nl(),
     %% --- Debug output - End -------------------------------------------------
 
     bus_sup:start_link().
