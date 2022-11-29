@@ -20,7 +20,10 @@
 %% ----------------------------------------------------------------------------
 
 % Helper constants.
--define(NEW_LINE, "\n").
+-define(EMPTY_STRING,   "").
+-define(SPACE,         " ").
+-define(V_BAR,         "|").
+-define(NEW_LINE,     "\n").
 
 % Common notification messages.
 -define(MSG_WORK_IN_PROGRESS, "This is a work in progress"
