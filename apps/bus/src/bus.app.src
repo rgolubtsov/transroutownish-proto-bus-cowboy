@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus.app.src
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.0.2
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.0.3
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -13,7 +13,7 @@
 
 {application, bus, [
     {description,  "Urban bus routing microservice prototype."},
-    {vsn,          "0.0.2"},
+    {vsn,          "0.0.3"},
     {licenses,     ["MIT License"]},
     {links,        []},
     {modules,      []},
@@ -22,10 +22,8 @@
         kernel,
         stdlib
     ]},
-    {mod, {
-        bus_app,   []}
-    },
-    {env,          [
+    {mod, { bus_app, []}},
+    {env, [
         {server_port, 8765},
 
         % Uncomment this setting to enable debug logging.
