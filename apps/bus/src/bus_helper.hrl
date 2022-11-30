@@ -49,6 +49,11 @@
 %% @doc The default server port number.
 -define(DEF_PORT, 8080).
 
+% The path and filename of the sample routes data store.
+-define(SAMPLE_ROUTES_PATH_PREFIX, "./"        ).
+-define(SAMPLE_ROUTES_PATH_DIR,    "data/"     ).
+-define(SAMPLE_ROUTES_FILENAME,    "routes.txt").
+
 % -----------------------------------------------------------------------------
 % Helper function. Used to get the application settings.
 %
@@ -80,14 +85,43 @@ get_settings() ->
         if (element(2, DebugLogEnabled_) =:= yes) -> true;
            (true) -> false end; (true) -> false end),
 
+    % Retrieving the path and filename of the routes data store.
+    DatastorePathPrefix_ = application:get_env(routes_datastore_path_prefix),
+    DatastorePathPrefix  = if (DatastorePathPrefix_ =/= undefined) ->
+        DatastorePathPrefix0 = element(2, DatastorePathPrefix_),
+        DatastorePathPrefix1 = string:is_empty(DatastorePathPrefix0),
+        if (not DatastorePathPrefix1) -> DatastorePathPrefix0;
+           (true) -> ?SAMPLE_ROUTES_PATH_PREFIX
+        end;
+       (true) -> ?SAMPLE_ROUTES_PATH_PREFIX
+    end,
+
+    DatastorePathDir_ = application:get_env(routes_datastore_path_dir),
+    DatastorePathDir  = if (DatastorePathDir_ =/= undefined) ->
+        DatastorePathDir0 = element(2, DatastorePathDir_),
+        DatastorePathDir1 = string:is_empty(DatastorePathDir0),
+        if (not DatastorePathDir1) -> DatastorePathDir0;
+           (true) -> ?SAMPLE_ROUTES_PATH_DIR
+        end;
+       (true) -> ?SAMPLE_ROUTES_PATH_DIR
+    end,
+
+    DatastoreFilename_ = application:get_env(routes_datastore_filename),
+    DatastoreFilename  = if (DatastoreFilename_ =/= undefined) ->
+        DatastoreFilename0 = element(2, DatastoreFilename_),
+        DatastoreFilename1 = string:is_empty(DatastoreFilename0),
+        if (not DatastoreFilename1) -> DatastoreFilename0;
+           (true) -> ?SAMPLE_ROUTES_FILENAME
+        end;
+       (true) -> ?SAMPLE_ROUTES_FILENAME
+    end,
+
     {
         ServerPort,
         DebugLogEnabled, % <== "true" or "false".
-
-        % The path and filename of the routes data store (as 3rd tuple elem).
-        element(2, application:get_env(routes_datastore_path_prefix))
-     ++ element(2, application:get_env(routes_datastore_path_dir   ))
-     ++ element(2, application:get_env(routes_datastore_filename   ))
+        DatastorePathPrefix
+     ++ DatastorePathDir
+     ++ DatastoreFilename
     }.
 
 % vim:set nu et ts=4 sw=4:
