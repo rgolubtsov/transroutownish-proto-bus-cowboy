@@ -22,10 +22,8 @@
         kernel,
         stdlib
     ]},
-    {mod, {
-        bus_app,   []}
-    },
-    {env,          [
+    {mod, { bus_app, []}},
+    {env, [
         {server_port, 8765},
 
         % Uncomment this setting to enable debug logging.
