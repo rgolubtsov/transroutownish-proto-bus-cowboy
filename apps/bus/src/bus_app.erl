@@ -42,8 +42,7 @@
 %% @returns The tuple containing the PID of the top supervisor
 %%          and the `State' indicator (defaults to an empty list).
 start(_StartType, _StartArgs) ->
-    io:put_chars(?MSG_WORK_IN_PROGRESS), io:nl(),
-    logger:info (?MSG_WORK_IN_PROGRESS),
+    logger:info(?MSG_WORK_IN_PROGRESS),
 
     % Getting the application settings.
     Settings = get_settings(),
@@ -64,7 +63,7 @@ start(_StartType, _StartArgs) ->
     end, [], Routes),
 
     %% --- Debug output - Begin -----------------------------------------------
-%   io:put_chars(RoutesList ++ ?V_BAR), io:nl(), io:nl(),
+    logger:debug(RoutesList ++ ?V_BAR),
     %% --- Debug output - End -------------------------------------------------
 
     bus_sup:start_link().
