@@ -62,9 +62,12 @@ start(_StartType, _StartArgs) ->
         ++ ?SPACE]])
     end, [], Routes),
 
-    %% --- Debug output - Begin -----------------------------------------------
-    logger:debug(RoutesList ++ ?V_BAR),
-    %% --- Debug output - End -------------------------------------------------
+    % Starting up the web server.
+    bus_controller:startup({
+        ServerPort,
+        DebugLogEnabled,
+        RoutesList
+    }),
 
     bus_sup:start_link().
 
