@@ -39,7 +39,7 @@ start(_StartType, _StartArgs) ->
     logger:info(?MSG_WORK_IN_PROGRESS),
 
     % Getting the application settings.
-    Settings = get_settings(),
+    Settings = get_settings_(),
 
     ServerPort      = element(1, Settings),
     DebugLogEnabled = element(2, Settings),
@@ -78,7 +78,7 @@ stop(_State) ->
 % Helper function. Used to get the application settings.
 %
 % Returns: The tuple containing values of individual settings.
-get_settings() ->
+get_settings_() ->
     % Retrieving the port number used to run the server.
     ServerPort_ = application:get_env(server_port),
 
