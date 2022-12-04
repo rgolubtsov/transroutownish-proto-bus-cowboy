@@ -80,4 +80,74 @@ start(_StartType, _StartArgs) ->
 stop(_State) ->
     ok.
 
+% -----------------------------------------------------------------------------
+% Helper function. Used to get the application settings.
+%
+% Returns: The tuple containing values of individual settings.
+get_settings() ->
+    % Retrieving the port number used to run the server.
+    ServerPort_ = application:get_env(server_port),
+
+    ServerPort  = integer_to_list(if (ServerPort_ =/= undefined) ->
+        ServerPort__ = element(2, ServerPort_),
+
+        if ((ServerPort__ >= ?MIN_PORT)
+        and (ServerPort__ =< ?MAX_PORT)) -> ServerPort__;
+           (true) ->
+            io:put_chars(?ERR_PORT_VALID_MUST_BE_POSITIVE_INT), io:nl(),
+
+            ?DEF_PORT
+        end;
+       (true) ->
+        io:put_chars(?ERR_PORT_VALID_MUST_BE_POSITIVE_INT), io:nl(),
+
+        ?DEF_PORT
+    end),
+
+    % Identifying, whether debug logging is enabled.
+    DebugLogEnabled_ = application:get_env(logger_debug_enabled),
+
+    DebugLogEnabled  = if (DebugLogEnabled_ =/= undefined) ->
+        if (element(2, DebugLogEnabled_) =:= yes) -> true;
+           (true) -> false end; (true) -> false end,
+
+    % Retrieving the path and filename of the routes data store.
+    DatastorePathPrefix_ = application:get_env(routes_datastore_path_prefix),
+    DatastorePathPrefix  = if (DatastorePathPrefix_ =/= undefined) ->
+        DatastorePathPrefix0 = element(2, DatastorePathPrefix_),
+        DatastorePathPrefix1 = string:is_empty(DatastorePathPrefix0),
+        if (not DatastorePathPrefix1) -> DatastorePathPrefix0;
+           (true) -> ?SAMPLE_ROUTES_PATH_PREFIX
+        end;
+       (true) -> ?SAMPLE_ROUTES_PATH_PREFIX
+    end,
+
+    DatastorePathDir_ = application:get_env(routes_datastore_path_dir),
+    DatastorePathDir  = if (DatastorePathDir_ =/= undefined) ->
+        DatastorePathDir0 = element(2, DatastorePathDir_),
+        DatastorePathDir1 = string:is_empty(DatastorePathDir0),
+        if (not DatastorePathDir1) -> DatastorePathDir0;
+           (true) -> ?SAMPLE_ROUTES_PATH_DIR
+        end;
+       (true) -> ?SAMPLE_ROUTES_PATH_DIR
+    end,
+
+    DatastoreFilename_ = application:get_env(routes_datastore_filename),
+    DatastoreFilename  = if (DatastoreFilename_ =/= undefined) ->
+        DatastoreFilename0 = element(2, DatastoreFilename_),
+        DatastoreFilename1 = string:is_empty(DatastoreFilename0),
+        if (not DatastoreFilename1) -> DatastoreFilename0;
+           (true) -> ?SAMPLE_ROUTES_FILENAME
+        end;
+       (true) -> ?SAMPLE_ROUTES_FILENAME
+    end,
+
+    {
+        ServerPort,
+        DebugLogEnabled, % <== "true" or "false".
+        DatastorePathPrefix
+     ++ DatastorePathDir
+     ++ DatastoreFilename
+    }.
+
 % vim:set nu et ts=4 sw=4:
