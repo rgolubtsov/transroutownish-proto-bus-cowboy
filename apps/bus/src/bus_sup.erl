@@ -20,7 +20,7 @@
 %% ----------------------------------------------------------------------------
 -module(bus_sup).
 
--behaviour(supervisor).
+-behavior(supervisor).
 
 -export([start_link/0, init/1]).
 
