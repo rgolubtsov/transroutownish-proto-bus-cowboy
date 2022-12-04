@@ -27,12 +27,6 @@
 -include("bus_helper.hrl").
 
 %% ----------------------------------------------------------------------------
-%% @doc The regex pattern for the element to be excluded from a bus stops
-%%      sequence: it is an arbitrary identifier of a route,
-%%      which is not used in the routes processing anyhow.
--define(ROUTE_ID_REGEX, "^\\d+").
-
-%% ----------------------------------------------------------------------------
 %% @doc The application entry point callback.
 %%      Creates the supervision tree by starting the top supervisor.
 %%
