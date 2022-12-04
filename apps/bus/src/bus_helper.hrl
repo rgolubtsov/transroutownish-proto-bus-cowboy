@@ -36,6 +36,8 @@
 % Common notification messages.
 -define(MSG_WORK_IN_PROGRESS, "This is a work in progress"
                         " - " "please wait for a while...").
+-define(MSG_SERVER_STARTED, "Server started on port ").
+-define(MSG_SERVER_STOPPED, "Server stopped"         ).
 
 %% ----------------------------------------------------------------------------
 %% @doc The minimum port number allowed.
@@ -81,9 +83,9 @@ get_settings() ->
     % Identifying, whether debug logging is enabled.
     DebugLogEnabled_ = application:get_env(logger_debug_enabled),
 
-    DebugLogEnabled  = atom_to_list(if (DebugLogEnabled_ =/= undefined) ->
+    DebugLogEnabled  = if (DebugLogEnabled_ =/= undefined) ->
         if (element(2, DebugLogEnabled_) =:= yes) -> true;
-           (true) -> false end; (true) -> false end),
+           (true) -> false end; (true) -> false end,
 
     % Retrieving the path and filename of the routes data store.
     DatastorePathPrefix_ = application:get_env(routes_datastore_path_prefix),
