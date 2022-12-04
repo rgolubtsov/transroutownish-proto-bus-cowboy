@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_app.erl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.0.3
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.0.4
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -14,23 +14,17 @@
 %% ----------------------------------------------------------------------------
 %% @doc The callback module of the application.
 %%
-%% @version 0.0.3
+%% @version 0.0.4
 %% @since   0.0.1
 %% @end
 %% ----------------------------------------------------------------------------
 -module(bus_app).
 
--behaviour(application).
+-behavior(application).
 
 -export([start/2, stop/1]).
 
 -include("bus_helper.hrl").
-
-%% ----------------------------------------------------------------------------
-%% @doc The regex pattern for the element to be excluded from a bus stops
-%%      sequence: it is an arbitrary identifier of a route,
-%%      which is not used in the routes processing anyhow.
--define(ROUTE_ID_REGEX, "^\\d+").
 
 %% ----------------------------------------------------------------------------
 %% @doc The application entry point callback.
@@ -45,7 +39,7 @@ start(_StartType, _StartArgs) ->
     logger:info(?MSG_WORK_IN_PROGRESS),
 
     % Getting the application settings.
-    Settings = get_settings(),
+    Settings = get_settings_(),
 
     ServerPort      = element(1, Settings),
     DebugLogEnabled = element(2, Settings),
@@ -62,9 +56,12 @@ start(_StartType, _StartArgs) ->
         ++ ?SPACE]])
     end, [], Routes),
 
-    %% --- Debug output - Begin -----------------------------------------------
-    logger:debug(RoutesList ++ ?V_BAR),
-    %% --- Debug output - End -------------------------------------------------
+    % Starting up the web server.
+    bus_controller:startup({
+        ServerPort,
+        DebugLogEnabled,
+        RoutesList
+    }),
 
     bus_sup:start_link().
 
@@ -76,5 +73,75 @@ start(_StartType, _StartArgs) ->
 %% @param _State The `State' indicator, as returned from the `start' callback.
 stop(_State) ->
     ok.
+
+% -----------------------------------------------------------------------------
+% Helper function. Used to get the application settings.
+%
+% Returns: The tuple containing values of individual settings.
+get_settings_() ->
+    % Retrieving the port number used to run the server.
+    ServerPort_ = application:get_env(server_port),
+
+    ServerPort  = integer_to_list(if (ServerPort_ =/= undefined) ->
+        ServerPort__ = element(2, ServerPort_),
+
+        if ((ServerPort__ >= ?MIN_PORT)
+        and (ServerPort__ =< ?MAX_PORT)) -> ServerPort__;
+           (true) ->
+            io:put_chars(?ERR_PORT_VALID_MUST_BE_POSITIVE_INT), io:nl(),
+
+            ?DEF_PORT
+        end;
+       (true) ->
+        io:put_chars(?ERR_PORT_VALID_MUST_BE_POSITIVE_INT), io:nl(),
+
+        ?DEF_PORT
+    end),
+
+    % Identifying, whether debug logging is enabled.
+    DebugLogEnabled_ = application:get_env(logger_debug_enabled),
+
+    DebugLogEnabled  = if (DebugLogEnabled_ =/= undefined) ->
+        if (element(2, DebugLogEnabled_) =:= yes) -> true;
+           (true) -> false end; (true) -> false end,
+
+    % Retrieving the path and filename of the routes data store.
+    DatastorePathPrefix_ = application:get_env(routes_datastore_path_prefix),
+    DatastorePathPrefix  = if (DatastorePathPrefix_ =/= undefined) ->
+        DatastorePathPrefix0 = element(2, DatastorePathPrefix_),
+        DatastorePathPrefix1 = string:is_empty(DatastorePathPrefix0),
+        if (not DatastorePathPrefix1) -> DatastorePathPrefix0;
+           (true) -> ?SAMPLE_ROUTES_PATH_PREFIX
+        end;
+       (true) -> ?SAMPLE_ROUTES_PATH_PREFIX
+    end,
+
+    DatastorePathDir_ = application:get_env(routes_datastore_path_dir),
+    DatastorePathDir  = if (DatastorePathDir_ =/= undefined) ->
+        DatastorePathDir0 = element(2, DatastorePathDir_),
+        DatastorePathDir1 = string:is_empty(DatastorePathDir0),
+        if (not DatastorePathDir1) -> DatastorePathDir0;
+           (true) -> ?SAMPLE_ROUTES_PATH_DIR
+        end;
+       (true) -> ?SAMPLE_ROUTES_PATH_DIR
+    end,
+
+    DatastoreFilename_ = application:get_env(routes_datastore_filename),
+    DatastoreFilename  = if (DatastoreFilename_ =/= undefined) ->
+        DatastoreFilename0 = element(2, DatastoreFilename_),
+        DatastoreFilename1 = string:is_empty(DatastoreFilename0),
+        if (not DatastoreFilename1) -> DatastoreFilename0;
+           (true) -> ?SAMPLE_ROUTES_FILENAME
+        end;
+       (true) -> ?SAMPLE_ROUTES_FILENAME
+    end,
+
+    {
+        ServerPort,
+        DebugLogEnabled, % <== "true" or "false".
+        DatastorePathPrefix
+     ++ DatastorePathDir
+     ++ DatastoreFilename
+    }.
 
 % vim:set nu et ts=4 sw=4:
