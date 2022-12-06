@@ -105,7 +105,7 @@ $ rebar3 tree
 ===> Fetching cowboy v2.9.0
 ===> Fetching cowlib v2.11.0
 ===> Fetching ranch v1.8.0
-└─ bus─0.0.4 (project app)
+└─ bus─0.0.5 (project app)
    └─ cowboy─2.9.0 (hex package)
       ├─ cowlib─2.11.0 (hex package)
       └─ ranch─1.8.0 (hex package)
