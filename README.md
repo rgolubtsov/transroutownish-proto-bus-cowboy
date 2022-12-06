@@ -97,6 +97,20 @@ $ make all  # <== Assembling releases of the microservice.
 ...
 ```
 
+---
+
+```
+$ rebar3 tree
+===> Verifying dependencies...
+===> Fetching cowboy v2.9.0
+===> Fetching cowlib v2.11.0
+===> Fetching ranch v1.8.0
+└─ bus─0.0.4 (project app)
+   └─ cowboy─2.9.0 (hex package)
+      ├─ cowlib─2.11.0 (hex package)
+      └─ ranch─1.8.0 (hex package)
+```
+
 ## Running
 
 **Run** the microservice using its startup script along with the `foreground` command, that is meant "*Start release with output to stdout*":
