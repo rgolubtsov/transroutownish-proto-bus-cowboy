@@ -25,7 +25,7 @@
 -include("bus_helper.hrl").
 
 %% ----------------------------------------------------------------------------
-%% @doc Starts up the web server.
+%% @doc Starts up the bundled web server.
 %%
 %% @param Args The tuple containing the server port number to listen on,
 %%             as the first element.
@@ -37,8 +37,11 @@ startup(Args) ->
     %% --- Debug output - Begin -----------------------------------------------
     if (DebugLogEnabled) ->
         logger:debug(RoutesList ++ ?V_BAR); (true) -> false
-    end.
+    end,
     %% --- Debug output - End -------------------------------------------------
+
+    % Starting up the Cowboy web server along with all their dependencies.
+    {ok, _} = application:ensure_all_started(cowboy).
 
 %   logger:info(?MSG_SERVER_STARTED ++ ServerPort).
 

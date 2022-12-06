@@ -56,7 +56,7 @@ start(_StartType, _StartArgs) ->
         ++ ?SPACE]])
     end, [], Routes),
 
-    % Starting up the web server.
+    % Starting up the bundled web server.
     bus_controller:startup({
         ServerPort,
         DebugLogEnabled,
