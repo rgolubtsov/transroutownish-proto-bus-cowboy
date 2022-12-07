@@ -99,6 +99,8 @@ $ make all  # <== Assembling releases of the microservice.
 
 ---
 
+The following command given is for demonstrational purposes only &mdash; Rebar3 will always fetch necessary dependencies during a one of their building phases, even at the `clean`-ing phase:
+
 ```
 $ rebar3 tree
 ===> Verifying dependencies...
