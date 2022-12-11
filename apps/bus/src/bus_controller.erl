@@ -41,8 +41,24 @@ startup(Args) ->
     %% --- Debug output - End -------------------------------------------------
 
     % Starting up the Cowboy web server along with all their dependencies.
-    {ok, _} = application:ensure_all_started(cowboy).
+    {ok, _} = application:ensure_all_started(cowboy),
 
-%   logger:info(?MSG_SERVER_STARTED ++ ServerPort).
+    Dispatch = cowboy_router:compile([
+        % Serving the sample routes data store for any request, any path,
+        % and any host as an example of using Cowboy's internal special
+        % request handler.
+        {'_', [
+            {'_', cowboy_static, {priv_file, bus, ?SAMPLE_ROUTES_PATH_DIR
+                                                  ?SAMPLE_ROUTES_FILENAME}}
+        ]}
+    ]),
+
+    {ok, _} = cowboy:start_clear(bus_listener, [
+        {port, ServerPort}
+    ], #{
+        env => #{dispatch => Dispatch}
+    }),
+
+    logger:info(?MSG_SERVER_STARTED ++ integer_to_list(ServerPort)).
 
 % vim:set nu et ts=4 sw=4:
