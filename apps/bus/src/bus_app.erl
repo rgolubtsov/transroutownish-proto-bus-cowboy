@@ -46,12 +46,23 @@ start(_StartType, _StartArgs) ->
     Datastore       = element(3, Settings),
 
     % Slurping routes from the routes data store.
-    Routes = string:split(
-        element(2,file:read_file(filename:join(code:priv_dir(bus),Datastore))),
-    ?NEW_LINE, all),
+    Routes_ = file:read_file(filename:join(code:priv_dir(bus), Datastore)),
 
-    RoutesList = lists:foldl(fun(Route, Routes_) ->
-        lists:append([Routes_, [
+    if ((element(1, Routes_) =:= error )
+    and (element(2, Routes_) =:= enoent)) ->
+        logger:critical(?ERR_DATASTORE_NOT_FOUND),
+
+        init:stop(?EXIT_FAILURE);
+       (true) -> false
+    end,
+
+    Routes = if (element(1, Routes_) =:= ok) ->
+        string:split(element(2, Routes_), ?NEW_LINE, all);
+       (true) -> []
+    end,
+
+    RoutesList = lists:foldl(fun(Route, Routes__) ->
+        lists:append([Routes__, [
            re:replace(Route, ?ROUTE_ID_REGEX, ?EMPTY_STRING, [{return, list}])
         ++ ?SPACE]])
     end, [], Routes),
@@ -68,10 +79,11 @@ start(_StartType, _StartArgs) ->
 %% ----------------------------------------------------------------------------
 %% @doc The application termination callback.
 %%      Gets called after the application has been stopped.
-%%      Currently does nothing.
 %%
 %% @param _State The `State' indicator, as returned from the `start' callback.
 stop(_State) ->
+    logger:info(?MSG_SERVER_STOPPED),
+
     ok.
 
 % -----------------------------------------------------------------------------
