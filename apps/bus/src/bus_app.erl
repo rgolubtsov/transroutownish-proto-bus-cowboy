@@ -82,7 +82,7 @@ get_settings_() ->
     % Retrieving the port number used to run the server.
     ServerPort_ = application:get_env(server_port),
 
-    ServerPort  = integer_to_list(if (ServerPort_ =/= undefined) ->
+    ServerPort  = if (ServerPort_ =/= undefined) ->
         ServerPort__ = element(2, ServerPort_),
 
         if ((ServerPort__ >= ?MIN_PORT)
@@ -96,7 +96,7 @@ get_settings_() ->
         io:put_chars(?ERR_PORT_VALID_MUST_BE_POSITIVE_INT), io:nl(),
 
         ?DEF_PORT
-    end),
+    end,
 
     % Identifying, whether debug logging is enabled.
     DebugLogEnabled_ = application:get_env(logger_debug_enabled),
