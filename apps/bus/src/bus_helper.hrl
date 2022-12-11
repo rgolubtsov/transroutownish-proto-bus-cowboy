@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_helper.hrl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.0.5
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.0
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -14,12 +14,14 @@
 %% ----------------------------------------------------------------------------
 %% @doc The helper header file for the application.
 %%
-%% @version 0.0.5
+%% @version 0.1.0
 %% @since   0.0.1
 %% @end
 %% ----------------------------------------------------------------------------
 
 % Helper constants.
+-define(EXIT_FAILURE,    1). %    Failing exit status.
+-define(EXIT_SUCCESS,    0). % Successful exit status.
 -define(EMPTY_STRING,   "").
 -define(SPACE,         " ").
 -define(V_BAR,         "|").
