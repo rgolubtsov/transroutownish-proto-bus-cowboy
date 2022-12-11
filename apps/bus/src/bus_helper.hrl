@@ -20,6 +20,8 @@
 %% ----------------------------------------------------------------------------
 
 % Helper constants.
+-define(EXIT_FAILURE,    1). %    Failing exit status.
+-define(EXIT_SUCCESS,    0). % Successful exit status.
 -define(EMPTY_STRING,   "").
 -define(SPACE,         " ").
 -define(V_BAR,         "|").
