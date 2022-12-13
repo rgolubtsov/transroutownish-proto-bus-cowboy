@@ -49,7 +49,9 @@ startup(Args) ->
         % request handler.
         {'_', [
             {'_', cowboy_static, {priv_file, bus, ?SAMPLE_ROUTES_PATH_DIR
-                                                  ?SAMPLE_ROUTES_FILENAME}}
+                                                  ?SAMPLE_ROUTES_FILENAME,
+                [{mimetypes, cow_mimetypes, all}]
+            }}
         ]}
     ]),
 
