@@ -29,7 +29,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc Creates the supervisor process as part of a supervision tree.
 %%
-%% @returns The tuple containing the PID of the supervisor created
+%% @returns The `ok' tuple containing the PID of the supervisor created
 %%          and the `State' indicator (defaults to an empty list).
 start_link() ->
     supervisor:start_link({local, ?SERVER}, ?MODULE, []).
@@ -40,7 +40,7 @@ start_link() ->
 %%      Defines configuration for the supervisor
 %%      and specifications of child processes.
 %%
-%% @returns The tuple containing configuration for the supervisor
+%% @returns The `ok' tuple containing configuration for the supervisor
 %%          and specifications of child processes.
 init([]) ->
     SupFlags = #{
