@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_app.erl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.0
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.5
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -14,7 +14,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc The callback module of the application.
 %%
-%% @version 0.1.0
+%% @version 0.1.5
 %% @since   0.0.1
 %% @end
 %% ----------------------------------------------------------------------------
@@ -84,7 +84,7 @@ start(_StartType, _StartArgs) ->
 stop(_State) ->
     logger:info(?MSG_SERVER_STOPPED),
 
-    ok.
+    ok = cowboy:stop_listener(bus_listener).
 
 % -----------------------------------------------------------------------------
 % Helper function. Used to get the application settings.

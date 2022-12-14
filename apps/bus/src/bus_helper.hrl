@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_helper.hrl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.0
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.5
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -14,7 +14,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc The helper header file for the application.
 %%
-%% @version 0.1.0
+%% @version 0.1.5
 %% @since   0.0.1
 %% @end
 %% ----------------------------------------------------------------------------
@@ -34,6 +34,12 @@
         "will be used instead.").
 -define(ERR_DATASTORE_NOT_FOUND,
         "FATAL: Data store file not found. Quitting...").
+-define(ERR_CANNOT_START_SERVER,
+        "FATAL: Cannot start server ").
+-define(ERR_ADDR_ALREADY_IN_USE,
+        "due to address requested already in use. Quitting...").
+-define(ERR_SERV_UNKNOWN_REASON,
+        "for an unknown reason. Quitting...").
 
 % Common notification messages.
 -define(MSG_WORK_IN_PROGRESS, "This is a work in progress"
@@ -63,5 +69,10 @@
 -define(SAMPLE_ROUTES_PATH_PREFIX, "./"        ).
 -define(SAMPLE_ROUTES_PATH_DIR,    "data/"     ).
 -define(SAMPLE_ROUTES_FILENAME,    "routes.txt").
+
+% HTTP response-related constants.
+-define(HTTP_200_OK,        200                   ).
+-define(HDR_CONTENT_TYPE_N, <<"content-type">>    ).
+-define(HDR_CONTENT_TYPE_V, <<"application/json">>).
 
 % vim:set nu et ts=4 sw=4:

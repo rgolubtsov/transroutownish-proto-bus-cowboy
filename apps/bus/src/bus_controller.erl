@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_controller.erl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.0
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.5
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -14,7 +14,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc The controller module of the application.
 %%
-%% @version 0.1.0
+%% @version 0.1.5
 %% @since   0.0.3
 %% @end
 %% ----------------------------------------------------------------------------
@@ -48,16 +48,30 @@ startup(Args) ->
         % and any host as an example of using Cowboy's internal special
         % request handler.
         {'_', [
-            {'_', cowboy_static, {priv_file, bus, ?SAMPLE_ROUTES_PATH_DIR
-                                                  ?SAMPLE_ROUTES_FILENAME}}
+%           {'_', cowboy_static, {priv_file, bus, ?SAMPLE_ROUTES_PATH_DIR
+%                                                 ?SAMPLE_ROUTES_FILENAME,
+%               [{mimetypes, cow_mimetypes, all}]
+%           }},
+            {"/", bus_handler, []}
         ]}
     ]),
 
-    {ok, _} = cowboy:start_clear(bus_listener, [
+    Status_ = cowboy:start_clear(bus_listener, [
         {port, ServerPort}
     ], #{
         env => #{dispatch => Dispatch}
     }),
+
+    if (element(1, Status_) =:= error) ->
+        if (element(2, Status_) =:= eaddrinuse) ->
+            logger:critical(?ERR_CANNOT_START_SERVER?ERR_ADDR_ALREADY_IN_USE);
+           (true) ->
+            logger:critical(?ERR_CANNOT_START_SERVER?ERR_SERV_UNKNOWN_REASON)
+        end,
+
+        init:stop(?EXIT_FAILURE);
+       (true) -> false
+    end,
 
     logger:info(?MSG_SERVER_STARTED ++ integer_to_list(ServerPort)).
 
