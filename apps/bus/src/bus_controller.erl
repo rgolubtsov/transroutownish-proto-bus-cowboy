@@ -56,11 +56,22 @@ startup(Args) ->
         ]}
     ]),
 
-    {ok, _} = cowboy:start_clear(bus_listener, [
+    Status_ = cowboy:start_clear(bus_listener, [
         {port, ServerPort}
     ], #{
         env => #{dispatch => Dispatch}
     }),
+
+    if (element(1, Status_) =:= error) ->
+        if (element(2, Status_) =:= eaddrinuse) ->
+            logger:critical(?ERR_CANNOT_START_SERVER?ERR_ADDR_ALREADY_IN_USE);
+           (true) ->
+            logger:critical(?ERR_CANNOT_START_SERVER?ERR_SERV_UNKNOWN_REASON)
+        end,
+
+        init:stop(?EXIT_FAILURE);
+       (true) -> false
+    end,
 
     logger:info(?MSG_SERVER_STARTED ++ integer_to_list(ServerPort)).
 
