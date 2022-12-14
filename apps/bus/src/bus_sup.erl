@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_sup.erl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.0
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.5
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -14,7 +14,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc The supervisor module of the application.
 %%
-%% @version 0.1.0
+%% @version 0.1.5
 %% @since   0.0.1
 %% @end
 %% ----------------------------------------------------------------------------
