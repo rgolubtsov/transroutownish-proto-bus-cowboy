@@ -84,7 +84,7 @@ start(_StartType, _StartArgs) ->
 stop(_State) ->
     logger:info(?MSG_SERVER_STOPPED),
 
-    ok.
+    ok = cowboy:stop_listener(bus_listener).
 
 % -----------------------------------------------------------------------------
 % Helper function. Used to get the application settings.
