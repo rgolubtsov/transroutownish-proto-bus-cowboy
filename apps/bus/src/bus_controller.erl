@@ -48,10 +48,11 @@ startup(Args) ->
         % and any host as an example of using Cowboy's internal special
         % request handler.
         {'_', [
-            {'_', cowboy_static, {priv_file, bus, ?SAMPLE_ROUTES_PATH_DIR
-                                                  ?SAMPLE_ROUTES_FILENAME,
-                [{mimetypes, cow_mimetypes, all}]
-            }}
+%           {'_', cowboy_static, {priv_file, bus, ?SAMPLE_ROUTES_PATH_DIR
+%                                                 ?SAMPLE_ROUTES_FILENAME,
+%               [{mimetypes, cow_mimetypes, all}]
+%           }},
+            {"/", bus_handler, []}
         ]}
     ]),
 
