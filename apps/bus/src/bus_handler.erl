@@ -35,12 +35,24 @@
 %% @param Req   The incoming HTTP request object.
 %% @param State TODO: Provide the description of the `State' param.
 %%
-%% @returns The `ok' tuple containing a new request object
+%% @returns The `cowboy_rest' tuple containing the request object
 %%          along with the state of the request.
+%%          The atom `cowboy_rest' indicates that Cowboy will pick
+%%          the REST handler behavior to operate on requests.
 init(Req, State) ->
     {cowboy_rest, Req, State}.
 
 %% ----------------------------------------------------------------------------
+%% @doc The REST-specific callback to respond to the client
+%%      when one of the `HEAD', `GET', or `OPTIONS' methods is used.
+%%
+%% @param Req   The incoming HTTP request object.
+%% @param State TODO: Provide the description of the `State' param.
+%%
+%% @returns The list of media types the microservice provides when responding
+%%          to the client. The special callback then will be called for any
+%%          appropriate request regarding the corresponding media type:
+%%          `application/json' is currently the only used one.
 content_types_provided(Req, State) ->
     {[{{
         ?MIME_TYPE, ?MIME_SUB_TYPE, % <== content-type: application/json
@@ -48,6 +60,19 @@ content_types_provided(Req, State) ->
     }, to_json}], Req, State}.
 
 %% ----------------------------------------------------------------------------
+%% @doc The so-called `ProvideCallback', used to return the response body.
+%%
+%% @param Req   The incoming HTTP request object.
+%% @param State TODO: Provide the description of the `State' param.
+%%
+%% @returns The body of the response in the JSON representation,
+%%          containing the following properties:
+%%          <ul>
+%%          <li><strong>from</strong> &mdash; The starting bus stop point.</li>
+%%          <li><strong>to</strong>   &mdash; The ending   bus stop point.</li>
+%%          <li><strong>direct</strong> &mdash; The logical indicator
+%%          of the presence of a direct route from `from' to `to'.</li>
+%%          </ul>
 to_json(Req, State) ->
     {<<"{}">>, Req, State}.
 
