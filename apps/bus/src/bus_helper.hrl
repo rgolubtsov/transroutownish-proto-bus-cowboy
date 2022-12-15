@@ -71,8 +71,7 @@
 -define(SAMPLE_ROUTES_FILENAME,    "routes.txt").
 
 % HTTP response-related constants.
--define(HTTP_200_OK,        200                   ).
--define(HDR_CONTENT_TYPE_N, <<"content-type">>    ).
--define(HDR_CONTENT_TYPE_V, <<"application/json">>).
+-define(MIME_TYPE,     <<"application">>).
+-define(MIME_SUB_TYPE, <<"json">>       ).
 
 % vim:set nu et ts=4 sw=4:
