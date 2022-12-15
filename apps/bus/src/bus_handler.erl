@@ -20,7 +20,11 @@
 %% ----------------------------------------------------------------------------
 -module(bus_handler).
 
--export([init/2]).
+-export([
+    init/2,
+    content_types_provided/2,
+    to_json/2
+]).
 
 -include("bus_helper.hrl").
 
@@ -34,10 +38,17 @@
 %% @returns The `ok' tuple containing a new request object
 %%          along with the state of the request.
 init(Req, State) ->
-    Req_ = cowboy_req:reply(?HTTP_200_OK, #{
-        ?HDR_CONTENT_TYPE_N => ?HDR_CONTENT_TYPE_V
-    }, Req),
+    {cowboy_rest, Req, State}.
 
-    {ok, Req_, State}.
+%% ----------------------------------------------------------------------------
+content_types_provided(Req, State) ->
+    {[{{
+        ?MIME_TYPE, ?MIME_SUB_TYPE, % <== content-type: application/json
+        []                          % <== No any params will be accepted.
+    }, to_json}], Req, State}.
+
+%% ----------------------------------------------------------------------------
+to_json(Req, State) ->
+    {<<"{}">>, Req, State}.
 
 % vim:set nu et ts=4 sw=4:
