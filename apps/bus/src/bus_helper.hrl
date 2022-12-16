@@ -25,6 +25,8 @@
 -define(EMPTY_STRING,   "").
 -define(SPACE,         " ").
 -define(V_BAR,         "|").
+-define(SLASH,         "/").
+-define(EQUALS,        "=").
 -define(NEW_LINE,     "\n").
 
 % Common error messages.
@@ -70,8 +72,16 @@
 -define(SAMPLE_ROUTES_PATH_DIR,    "data/"     ).
 -define(SAMPLE_ROUTES_FILENAME,    "routes.txt").
 
+% REST URI path-related constants.
+-define(REST_PREFIX, "route" ).
+-define(REST_DIRECT, "direct").
+
 % HTTP response-related constants.
 -define(MIME_TYPE,     <<"application">>).
 -define(MIME_SUB_TYPE, <<"json">>       ).
+
+% HTTP request parameter names.
+-define(FROM, "from").
+-define(TO,   "to"  ).
 
 % vim:set nu et ts=4 sw=4:
