@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_helper.hrl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.5
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.7
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -14,7 +14,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc The helper header file for the application.
 %%
-%% @version 0.1.5
+%% @version 0.1.7
 %% @since   0.0.1
 %% @end
 %% ----------------------------------------------------------------------------
@@ -25,6 +25,8 @@
 -define(EMPTY_STRING,   "").
 -define(SPACE,         " ").
 -define(V_BAR,         "|").
+-define(SLASH,         "/").
+-define(EQUALS,        "=").
 -define(NEW_LINE,     "\n").
 
 % Common error messages.
@@ -70,9 +72,16 @@
 -define(SAMPLE_ROUTES_PATH_DIR,    "data/"     ).
 -define(SAMPLE_ROUTES_FILENAME,    "routes.txt").
 
+% REST URI path-related constants.
+-define(REST_PREFIX, "route" ).
+-define(REST_DIRECT, "direct").
+
 % HTTP response-related constants.
--define(HTTP_200_OK,        200                   ).
--define(HDR_CONTENT_TYPE_N, <<"content-type">>    ).
--define(HDR_CONTENT_TYPE_V, <<"application/json">>).
+-define(MIME_TYPE,     <<"application">>).
+-define(MIME_SUB_TYPE, <<"json">>       ).
+
+% HTTP request parameter names.
+-define(FROM, "from").
+-define(TO,   "to"  ).
 
 % vim:set nu et ts=4 sw=4:
