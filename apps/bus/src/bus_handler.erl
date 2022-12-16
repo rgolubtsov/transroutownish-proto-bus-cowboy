@@ -74,6 +74,14 @@ content_types_provided(Req, State) ->
 %%          of the presence of a direct route from `from' to `to'.</li>
 %%          </ul>
 to_json(Req, State) ->
-    {<<"{}">>, Req, State}.
+    #{from := From, to := To} = cowboy_req:match_qs([{from,int},{to,int}],Req),
+
+    logger:debug(?FROM?EQUALS ++ integer_to_list(From) ++ ?SPACE?V_BAR?SPACE
+                   ?TO?EQUALS ++ integer_to_list(To  )),
+
+    {[
+        "{\""?FROM"\":", integer_to_list(From),
+          ",\""?TO"\":", integer_to_list(To  ), "}"
+    ], Req, State}.
 
 % vim:set nu et ts=4 sw=4:
