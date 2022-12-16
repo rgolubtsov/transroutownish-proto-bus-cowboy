@@ -52,7 +52,10 @@ startup(Args) ->
 %                                                 ?SAMPLE_ROUTES_FILENAME,
 %               [{mimetypes, cow_mimetypes, all}]
 %           }},
-            {"/", bus_handler, []}
+            {
+                ?SLASH?REST_PREFIX?SLASH?REST_DIRECT, % <== GET /route/direct
+                bus_handler, []
+            }
         ]}
     ]),
 
