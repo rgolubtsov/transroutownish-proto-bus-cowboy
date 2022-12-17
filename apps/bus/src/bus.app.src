@@ -21,7 +21,8 @@
     {applications, [
         kernel,
         stdlib,
-        cowboy
+        cowboy,
+        jsx
     ]},
     {mod, { bus_app, []}},
     {env, [
