@@ -84,4 +84,7 @@
 -define(FROM, <<"from">>).
 -define(TO,   <<"to">>  ).
 
+% HTTP request parameter default values.
+-define(ZERO, <<"0">>).
+
 % vim:set nu et ts=4 sw=4:
