@@ -81,7 +81,7 @@
 -define(MIME_SUB_TYPE, <<"json">>       ).
 
 % HTTP request parameter names.
--define(FROM, "from").
--define(TO,   "to"  ).
+-define(FROM, <<"from">>).
+-define(TO,   <<"to">>  ).
 
 % vim:set nu et ts=4 sw=4:
