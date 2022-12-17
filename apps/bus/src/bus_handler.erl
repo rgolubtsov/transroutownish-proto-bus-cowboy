@@ -56,7 +56,7 @@ init(Req, State) ->
 content_types_provided(Req, State) ->
     {[{{
         ?MIME_TYPE, ?MIME_SUB_TYPE, % <== content-type: application/json
-        []                          % <== No any params will be accepted.
+        []                          % <== No any params needed for this c-type.
     }, to_json}], Req, State}.
 
 %% ----------------------------------------------------------------------------
@@ -74,11 +74,28 @@ content_types_provided(Req, State) ->
 %%          of the presence of a direct route from `from' to `to'.</li>
 %%          </ul>
 to_json(Req, State) ->
-    #{from := From, to := To} = cowboy_req:match_qs([{from,int},{to,int}],Req),
+    % -------------------------------------------------------------------------
+    % --- Parsing and validating request params - Begin -----------------------
+    % -------------------------------------------------------------------------
+    #{from := From_, to := To_} = cowboy_req:match_qs([
+        {from, [], ?ZERO},
+        {to,   [], ?ZERO}
+    ], Req),
+
+    From__ = if (is_boolean(From_)) -> ?ZERO; (true) -> From_ end,
+    To__   = if (is_boolean(To_  )) -> ?ZERO; (true) -> To_   end,
 
     logger:debug(
-  binary:bin_to_list(?FROM)++?EQUALS++integer_to_list(From)++?SPACE?V_BAR?SPACE
-++binary:bin_to_list(?TO  )++?EQUALS++integer_to_list(To  )),
+        binary:bin_to_list(?FROM) ++ ?EQUALS ++ binary:bin_to_list(From__)
+     ++ ?SPACE?V_BAR?SPACE
+     ++ binary:bin_to_list(?TO  ) ++ ?EQUALS ++ binary:bin_to_list(To__  )
+    ),
+
+    From = try binary_to_integer(From__) catch error:badarg -> ?ZERO end,
+    To   = try binary_to_integer(To__  ) catch error:badarg -> ?ZERO end,
+    % -------------------------------------------------------------------------
+    % --- Parsing and validating request params - End -------------------------
+    % -------------------------------------------------------------------------
 
     {jsx:encode(#{
         ?FROM => From,
