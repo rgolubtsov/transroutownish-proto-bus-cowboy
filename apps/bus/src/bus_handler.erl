@@ -74,6 +74,8 @@ content_types_provided(Req, State) ->
 %%          of the presence of a direct route from `from' to `to'.</li>
 %%          </ul>
 to_json(Req, State) ->
+    #{debug_log_enabled := DebugLogEnabled} = State,
+
     % -------------------------------------------------------------------------
     % --- Parsing and validating request params - Begin -----------------------
     % -------------------------------------------------------------------------
@@ -85,11 +87,11 @@ to_json(Req, State) ->
     From__ = if (is_boolean(From_)) -> ?ZERO; (true) -> From_ end,
     To__   = if (is_boolean(To_  )) -> ?ZERO; (true) -> To_   end,
 
-    logger:debug(
+    if (DebugLogEnabled) -> logger:debug(
         binary:bin_to_list(?FROM) ++ ?EQUALS ++ binary:bin_to_list(From__)
      ++ ?SPACE?V_BAR?SPACE
      ++ binary:bin_to_list(?TO  ) ++ ?EQUALS ++ binary:bin_to_list(To__  )
-    ),
+    ); (true) -> false end,
 
     From = try binary_to_integer(From__) catch error:badarg -> 0 end,
     To   = try binary_to_integer(To__  ) catch error:badarg -> 0 end,
