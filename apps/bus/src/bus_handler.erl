@@ -91,15 +91,20 @@ to_json(Req, State) ->
      ++ binary:bin_to_list(?TO  ) ++ ?EQUALS ++ binary:bin_to_list(To__  )
     ),
 
-    From = try binary_to_integer(From__) catch error:badarg -> ?ZERO end,
-    To   = try binary_to_integer(To__  ) catch error:badarg -> ?ZERO end,
+    From = try binary_to_integer(From__) catch error:badarg -> 0 end,
+    To   = try binary_to_integer(To__  ) catch error:badarg -> 0 end,
+
+    IsRequestMalformed = if ((From<1) or (To<1)) -> true; (true) -> false end,
     % -------------------------------------------------------------------------
     % --- Parsing and validating request params - End -------------------------
     % -------------------------------------------------------------------------
 
-    {jsx:encode(#{
-        ?FROM => From,
-        ?TO   => To
-    }), Req, State}.
+    RespBody = if (IsRequestMalformed) ->
+        #{error => ?ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS};
+       (true) ->
+        #{?FROM => From, ?TO => To}
+    end,
+
+    {jsx:encode(RespBody), Req, State}.
 
 % vim:set nu et ts=4 sw=4:
