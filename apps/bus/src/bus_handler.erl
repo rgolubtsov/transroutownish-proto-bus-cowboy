@@ -99,12 +99,21 @@ to_json(Req, State) ->
     % --- Parsing and validating request params - End -------------------------
     % -------------------------------------------------------------------------
 
-    RespBody = if (IsRequestMalformed) ->
-        #{error => ?ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS};
+    if (IsRequestMalformed) ->
+        % Not using the malformed_request/2 callback when responding
+        % with the HTTP 400 Bad Request status code; instead setting
+        % the response body and then sending the response, specifying
+        % the status code explicitly. All the required headers are already
+        % there, including the content-type, which is set correctly.
+        cowboy_req:reply(?HTTP_400_BAD_REQ, cowboy_req:set_resp_body
+        (jsx:encode(#{
+            error => ?ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS
+        }), Req));
        (true) ->
-        #{?FROM => From, ?TO => To}
-    end,
-
-    {jsx:encode(RespBody), Req, State}.
+        {jsx:encode(#{
+            ?FROM => From,
+            ?TO   => To
+        }), Req, State}
+    end.
 
 % vim:set nu et ts=4 sw=4:
