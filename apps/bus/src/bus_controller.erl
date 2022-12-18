@@ -54,7 +54,7 @@ startup(Args) ->
 %           }},
             {
                 ?SLASH?REST_PREFIX?SLASH?REST_DIRECT, % <== GET /route/direct
-                bus_handler, []
+                bus_handler, #{debug_log_enabled => DebugLogEnabled}
             }
         ]}
     ]),
