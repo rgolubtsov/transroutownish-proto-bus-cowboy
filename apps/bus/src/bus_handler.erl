@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_handler.erl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.7
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.10
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -14,7 +14,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc The request handler module of the application.
 %%
-%% @version 0.1.7
+%% @version 0.1.10
 %% @since   0.1.0
 %% @end
 %% ----------------------------------------------------------------------------
@@ -74,6 +74,8 @@ content_types_provided(Req, State) ->
 %%          of the presence of a direct route from `from' to `to'.</li>
 %%          </ul>
 to_json(Req, State) ->
+    #{debug_log_enabled := DebugLogEnabled} = State,
+
     % -------------------------------------------------------------------------
     % --- Parsing and validating request params - Begin -----------------------
     % -------------------------------------------------------------------------
@@ -85,11 +87,11 @@ to_json(Req, State) ->
     From__ = if (is_boolean(From_)) -> ?ZERO; (true) -> From_ end,
     To__   = if (is_boolean(To_  )) -> ?ZERO; (true) -> To_   end,
 
-    logger:debug(
+    if (DebugLogEnabled) -> logger:debug(
         binary:bin_to_list(?FROM) ++ ?EQUALS ++ binary:bin_to_list(From__)
      ++ ?SPACE?V_BAR?SPACE
      ++ binary:bin_to_list(?TO  ) ++ ?EQUALS ++ binary:bin_to_list(To__  )
-    ),
+    ); (true) -> false end,
 
     From = try binary_to_integer(From__) catch error:badarg -> 0 end,
     To   = try binary_to_integer(To__  ) catch error:badarg -> 0 end,
@@ -99,12 +101,21 @@ to_json(Req, State) ->
     % --- Parsing and validating request params - End -------------------------
     % -------------------------------------------------------------------------
 
-    RespBody = if (IsRequestMalformed) ->
-        #{error => ?ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS};
+    if (IsRequestMalformed) ->
+        % Not using the malformed_request/2 callback when responding
+        % with the HTTP 400 Bad Request status code; instead setting
+        % the response body and then sending the response, specifying
+        % the status code explicitly. All the required headers are already
+        % there, including the content-type, which is set correctly.
+        cowboy_req:reply(?HTTP_400_BAD_REQ, cowboy_req:set_resp_body
+        (jsx:encode(#{
+            error => ?ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS
+        }), Req));
        (true) ->
-        #{?FROM => From, ?TO => To}
-    end,
-
-    {jsx:encode(RespBody), Req, State}.
+        {jsx:encode(#{
+            ?FROM => From,
+            ?TO   => To
+        }), Req, State}
+    end.
 
 % vim:set nu et ts=4 sw=4:

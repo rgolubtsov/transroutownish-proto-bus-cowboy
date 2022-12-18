@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_helper.hrl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.7
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.10
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -14,7 +14,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc The helper header file for the application.
 %%
-%% @version 0.1.7
+%% @version 0.1.10
 %% @since   0.0.1
 %% @end
 %% ----------------------------------------------------------------------------
@@ -89,5 +89,8 @@
 
 % HTTP request parameter default values.
 -define(ZERO, <<"0">>).
+
+% HTTP response status codes.
+-define(HTTP_400_BAD_REQ, 400).
 
 % vim:set nu et ts=4 sw=4:
