@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_handler.erl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.7
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.10
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -14,7 +14,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc The request handler module of the application.
 %%
-%% @version 0.1.7
+%% @version 0.1.10
 %% @since   0.1.0
 %% @end
 %% ----------------------------------------------------------------------------
