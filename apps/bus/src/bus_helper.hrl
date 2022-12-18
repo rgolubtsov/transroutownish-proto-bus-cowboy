@@ -42,6 +42,9 @@
         "due to address requested already in use. Quitting...").
 -define(ERR_SERV_UNKNOWN_REASON,
         "for an unknown reason. Quitting...").
+-define(ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS,
+      <<"Request parameters must take positive integer values, "
+        "in the range 1 .. 2,147,483,647. Please check your inputs.">>).
 
 % Common notification messages.
 -define(MSG_WORK_IN_PROGRESS, "This is a work in progress"
