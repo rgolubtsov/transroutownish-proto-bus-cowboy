@@ -90,4 +90,7 @@
 % HTTP request parameter default values.
 -define(ZERO, <<"0">>).
 
+% HTTP response status codes.
+-define(HTTP_400_BAD_REQ, 400).
+
 % vim:set nu et ts=4 sw=4:
