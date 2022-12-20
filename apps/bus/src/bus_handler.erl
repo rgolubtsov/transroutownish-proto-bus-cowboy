@@ -74,7 +74,10 @@ content_types_provided(Req, State) ->
 %%          of the presence of a direct route from `from' to `to'.</li>
 %%          </ul>
 to_json(Req, State) ->
-    #{debug_log_enabled := DebugLogEnabled} = State,
+    #{
+        debug_log_enabled := DebugLogEnabled,
+        routes_list       := RoutesList
+    } = State,
 
     % -------------------------------------------------------------------------
     % --- Parsing and validating request params - Begin -----------------------
@@ -112,10 +115,65 @@ to_json(Req, State) ->
             error => ?ERR_REQ_PARAMS_MUST_BE_POSITIVE_INTS
         }), Req));
        (true) ->
+        % Performing the routes processing to find out the direct route.
+        Direct = if (From =:= To) -> false;
+           (true) ->
+            find_direct_route(DebugLogEnabled, RoutesList, From, To)
+        end,
+
         {jsx:encode(#{
-            ?FROM => From,
-            ?TO   => To
+            ?FROM  => From,
+            ?TO    => To,
+            direct => Direct
         }), Req, State}
+    end.
+
+%% ----------------------------------------------------------------------------
+%% @doc Performs the routes processing (onto bus stops sequences) to identify
+%%      and return whether a particular interval between two bus stop points
+%%      given is direct (i.e. contains in any of the routes), or not.
+%%
+%% @param DebugLogEnabled The debug logging enabler.
+%% @param RoutesList      The list containing all available routes.
+%% @param From_           The starting bus stop point.
+%% @param To_             The ending   bus stop point.
+%%
+%% @returns `true' if the direct route is found, `false' otherwise.
+find_direct_route(DebugLogEnabled, RoutesList, From_, To_) ->
+    From = integer_to_list(From_),
+    To   = integer_to_list(To_  ),
+
+    try
+        lists:foldl(fun(Route, I) ->
+            if (DebugLogEnabled) ->
+                logger:debug(integer_to_list(I)++?SPACE?EQUALS?SPACE++Route);
+               (true) -> false
+            end,
+
+            MatchFrom = re:run(Route, ?SEQ1_REGEX ++ From ++ ?SEQ2_REGEX),
+            if (element(1, MatchFrom) =:= match) ->
+                % Pinning in the starting bus stop point, if it's found.
+                % Next, searching for the ending bus stop point
+                % on the current route, beginning at the pinned point.
+                RouteFrom = string:slice(Route, string:str(Route, From) - 1),
+
+                if (DebugLogEnabled) ->
+                    logger:debug(From ++ ?SPACE?V_BAR?SPACE ++ RouteFrom);
+                   (true) -> false
+                end,
+
+                MatchTo = re:run(RouteFrom, ?SEQ1_REGEX ++ To ++ ?SEQ2_REGEX),
+                if (element(1, MatchTo) =:= match) ->
+                    throw(true);
+                   (true) -> false
+                end;
+               (true) -> false
+            end,
+
+            I + 1
+        end, 1, RoutesList), false
+    catch
+        (true) -> true % <== Like direct = true; break;
     end.
 
 % vim:set nu et ts=4 sw=4:
