@@ -44,17 +44,20 @@ startup(Args) ->
     {ok, _} = application:ensure_all_started(cowboy),
 
     Dispatch = cowboy_router:compile([
-        % Serving the sample routes data store for any request, any path,
-        % and any host as an example of using Cowboy's internal special
-        % request handler.
         {'_', [
+            % Serving the sample routes data store for any request, any path,
+            % and any host as an example of using Cowboy's internal special
+            % request handler. (Despite inactive, let it remains.)
 %           {'_', cowboy_static, {priv_file, bus, ?SAMPLE_ROUTES_PATH_DIR
 %                                                 ?SAMPLE_ROUTES_FILENAME,
 %               [{mimetypes, cow_mimetypes, all}]
 %           }},
             {
                 ?SLASH?REST_PREFIX?SLASH?REST_DIRECT, % <== GET /route/direct
-                bus_handler, #{debug_log_enabled => DebugLogEnabled}
+                bus_handler, #{
+                    debug_log_enabled => DebugLogEnabled,
+                    routes_list       => RoutesList
+                }
             }
         ]}
     ]),
