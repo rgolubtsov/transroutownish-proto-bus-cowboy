@@ -36,8 +36,6 @@
 %% @returns The tuple containing the PID of the top supervisor
 %%          and the `State' indicator (defaults to an empty list).
 start(_StartType, _StartArgs) ->
-    logger:info(?MSG_WORK_IN_PROGRESS),
-
     % Getting the application settings.
     Settings = get_settings_(),
 

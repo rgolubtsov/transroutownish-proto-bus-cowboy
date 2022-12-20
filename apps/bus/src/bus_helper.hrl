@@ -47,8 +47,6 @@
         "in the range 1 .. 2,147,483,647. Please check your inputs.">>).
 
 % Common notification messages.
--define(MSG_WORK_IN_PROGRESS, "This is a work in progress"
-                        " - " "please wait for a while...").
 -define(MSG_SERVER_STARTED, "Server started on port ").
 -define(MSG_SERVER_STOPPED, "Server stopped"         ).
 
