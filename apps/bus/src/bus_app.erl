@@ -65,7 +65,7 @@ start(_StartType, _StartArgs) ->
         lists:append([Routes__, [
            re:replace(Route, ?ROUTE_ID_REGEX, ?EMPTY_STRING, [{return, list}])
         ++ ?SPACE]])
-    end, [], Routes),
+    end, [], lists:droplast(Routes)),
 
     % Starting up the bundled web server.
     bus_controller:startup({
@@ -91,7 +91,7 @@ stop(_State) ->
 %
 % Returns: The tuple containing values of individual settings.
 get_settings_() ->
-    % Retrieving the port number used to run the server.
+    % Retrieving the port number used to run the server -----------------------
     ServerPort_ = application:get_env(server_port),
 
     ServerPort  = if (ServerPort_ =/= undefined) ->
@@ -110,14 +110,14 @@ get_settings_() ->
         ?DEF_PORT
     end,
 
-    % Identifying, whether debug logging is enabled.
+    % Identifying, whether debug logging is enabled ---------------------------
     DebugLogEnabled_ = application:get_env(logger_debug_enabled),
 
     DebugLogEnabled  = if (DebugLogEnabled_ =/= undefined) ->
         if (element(2, DebugLogEnabled_) =:= yes) -> true;
            (true) -> false end; (true) -> false end,
 
-    % Retrieving the path and filename of the routes data store.
+    % Retrieving the path and filename of the routes data store ---------------
     DatastorePathPrefix_ = application:get_env(routes_datastore_path_prefix),
     DatastorePathPrefix  = if (DatastorePathPrefix_ =/= undefined) ->
         DatastorePathPrefix0 = element(2, DatastorePathPrefix_),
