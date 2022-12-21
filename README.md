@@ -3,8 +3,6 @@
 **An Erlang/OTP application, designed and intended to be run as a microservice,
 <br />implementing a simple urban bus routing prototype**
 
-(*This is a work in progress &mdash; please wait for a while...*)
-
 **Rationale:** This project is a *direct* **[Erlang](https://erlang.org "Real-time, concurrent and distributed functional language")** port of the earlier developed **urban bus routing prototype**, written in Java using **[Spring Boot](https://spring.io/projects/spring-boot "Stand-alone Spring apps builder and runner")** framework, and tailored to be run as a microservice in a Docker container. The following description of the underlying architecture and logics has been taken **[from there](https://github.com/rgolubtsov/transroutownish-proto-bus-spring-boot)** as is, without any modifications or adjustment.
 
 Consider an IoT system that aimed at planning and forming a specific bus route for a hypothetical passenger. One crucial part of such system is a **module**, that is responsible for filtering bus routes between two arbitrary bus stops where a direct route is actually present and can be easily found. Imagine there is a fictional urban public transportation agency that provides a wide series of bus routes, which covered large city areas, such that they are consisting of many bus stop points in each route. Let's name this agency **Trans-RoutE-Townish Co., Ltd.** or in the Net representation &mdash; **transroutownish.com**, hence the name of the project.
@@ -42,6 +40,8 @@ One may consider this project has to be suitable for a wide variety of applied a
 
 * **[Building](#building)**
 * **[Running](#running)**
+* **[Consuming](#consuming)**
+  * **[Error handling](#error-handling)**
 
 ## Building
 
@@ -105,9 +105,9 @@ The following command given is for demonstrational purposes only &mdash; Rebar3 
 $ rebar3 tree
 ===> Verifying dependencies...
 ===> Fetching cowboy v2.9.0
+===> Fetching jsx v3.1.0
 ===> Fetching cowlib v2.11.0
 ===> Fetching ranch v1.8.0
-===> Fetching jsx v3.1.0
 └─ bus─0.1.10 (project app)
    ├─ cowboy─2.9.0 (hex package)
    │  ├─ cowlib─2.11.0 (hex package)
@@ -159,3 +159,44 @@ $ ./_build/prod/rel/bus/bin/bus daemon; echo $?
 ```
 
 The `daemon_attach` command then allows connecting to the microservice to make interactions with them. But the latter is not required at all regarding the true purpose of the microservice. And it can be stopped again with the `stop` command in the same terminal session.
+
+## Consuming
+
+All the routes are contained in a so-called **routes data store**. It is located in the `data/` directory. The default filename for it is `routes.txt`, but it can be specified explicitly (if intended to use another one) in the `apps/bus/src/bus.app.src` file.
+
+**Identify**, whether there is a direct route between two bus stops with IDs given in the **HTTP GET** request, searching for them against the underlying **routes data store**:
+
+HTTP request param | Sample value | Another sample value | Yet another sample value
+------------------ | ------------ | -------------------- | ------------------------
+`from`             | `4838`       | `82`                 | `2147483647`
+`to`               | `524987`     | `35390`              | `1`
+
+The direct route is found:
+
+```
+$ curl 'http://localhost:8765/route/direct?from=4838&to=524987'
+{"direct":true,"from":4838,"to":524987}
+```
+
+The direct route is not found:
+
+```
+$ curl 'http://localhost:8765/route/direct?from=82&to=35390'
+{"direct":false,"from":82,"to":35390}
+```
+
+### Error handling
+
+When the query string passed in a request, contains inappropriate input, or the URI endpoint doesn't contain anything else at all after its path, the microservice will respond with the **HTTP 400 Bad Request** status code, including a specific response body in JSON representation, like the following:
+
+```
+$ curl 'http://localhost:8765/route/direct?from=qwerty4838&to=-i-.;--089asdf../nj524987'
+{"error":"Request parameters must take positive integer values, in the range 1 .. 2,147,483,647. Please check your inputs."}
+```
+
+Or even simpler:
+
+```
+$ curl http://localhost:8765/route/direct
+{"error":"Request parameters must take positive integer values, in the range 1 .. 2,147,483,647. Please check your inputs."}
+```
