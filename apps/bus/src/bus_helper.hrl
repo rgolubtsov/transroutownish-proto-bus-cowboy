@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_helper.hrl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.1.10
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.2.0
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -14,7 +14,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc The helper header file for the application.
 %%
-%% @version 0.1.10
+%% @version 0.2.0
 %% @since   0.0.1
 %% @end
 %% ----------------------------------------------------------------------------
@@ -47,8 +47,6 @@
         "in the range 1 .. 2,147,483,647. Please check your inputs.">>).
 
 % Common notification messages.
--define(MSG_WORK_IN_PROGRESS, "This is a work in progress"
-                        " - " "please wait for a while...").
 -define(MSG_SERVER_STARTED, "Server started on port ").
 -define(MSG_SERVER_STOPPED, "Server stopped"         ).
 
@@ -57,6 +55,16 @@
 %%      sequence: it is an arbitrary identifier of a route,
 %%      which is not used in the routes processing anyhow.
 -define(ROUTE_ID_REGEX, "^\\d+").
+
+%% ----------------------------------------------------------------------------
+%% @doc The regex pattern for the leading part of a bus stops sequence,
+%%      before the matching element.
+-define(SEQ1_REGEX, ".*\\s").
+
+%% ----------------------------------------------------------------------------
+%% @doc The regex pattern for the trailing part of a bus stops sequence,
+%%      after the matching element.
+-define(SEQ2_REGEX, "\\s.*").
 
 %% ----------------------------------------------------------------------------
 %% @doc The minimum port number allowed.
