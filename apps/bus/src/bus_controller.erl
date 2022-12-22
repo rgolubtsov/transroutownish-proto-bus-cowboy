@@ -41,7 +41,7 @@ startup(Args) ->
         {'_', [
             % Serving the sample routes data store for any request, any path,
             % and any host as an example of using Cowboy's internal special
-            % request handler. (Despite inactive, let it remain.)
+            % request handler. (Despite being inactive, let it remain.)
 %           {'_', cowboy_static, {priv_file, bus, ?SAMPLE_ROUTES_PATH_DIR
 %                                                 ?SAMPLE_ROUTES_FILENAME,
 %               [{mimetypes, cow_mimetypes, all}]
