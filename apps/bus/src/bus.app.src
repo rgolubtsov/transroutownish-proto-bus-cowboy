@@ -22,6 +22,7 @@
         kernel,
         stdlib,
         cowboy,
+        syslog,
         jsx
     ]},
     {mod, { bus_app, []}},
