@@ -33,6 +33,7 @@ startup(Args) ->
     ServerPort      = element(1, Args),
     DebugLogEnabled = element(2, Args),
     RoutesList      = element(3, Args),
+    Syslog          = element(4, Args),
 
     % Starting up the Cowboy web server along with all their dependencies.
     {ok, _} = application:ensure_all_started(cowboy),
@@ -50,7 +51,8 @@ startup(Args) ->
                 ?SLASH?REST_PREFIX?SLASH?REST_DIRECT, % <== GET /route/direct
                 bus_handler, #{
                     debug_log_enabled => DebugLogEnabled,
-                    routes_list       => RoutesList
+                    routes_list       => RoutesList,
+                    syslog            => Syslog
                 }
             }
         ]}
@@ -73,6 +75,9 @@ startup(Args) ->
        (true) -> false
     end,
 
-    logger:info(?MSG_SERVER_STARTED ++ integer_to_list(ServerPort)).
+    ServerPort_ = integer_to_list(ServerPort),
+
+    logger:info(              ?MSG_SERVER_STARTED ++ ServerPort_),
+    syslog:log (Syslog, info, ?MSG_SERVER_STARTED ++ ServerPort_).
 
 % vim:set nu et ts=4 sw=4:

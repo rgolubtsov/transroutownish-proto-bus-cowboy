@@ -65,11 +65,18 @@ start(_StartType, _StartArgs) ->
         ++ ?SPACE]])
     end, [], lists:droplast(Routes)),
 
+    AppName = atom_to_list(element(2, application:get_application())),
+
+    % Opening the system logger.
+    % Calling <syslog.h> openlog(NULL, LOG_CONS | LOG_PID, LOG_DAEMON);
+    syslog:start(), {ok, Syslog} = syslog:open(AppName, [cons, pid], daemon),
+
     % Starting up the bundled web server.
     bus_controller:startup({
         ServerPort,
         DebugLogEnabled,
-        RoutesList
+        RoutesList,
+        Syslog
     }),
 
     bus_sup:start_link().

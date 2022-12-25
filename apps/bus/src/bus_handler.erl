@@ -76,7 +76,8 @@ content_types_provided(Req, State) ->
 to_json(Req, State) ->
     #{
         debug_log_enabled := DebugLogEnabled,
-        routes_list       := RoutesList
+        routes_list       := RoutesList,
+        syslog            := Syslog
     } = State,
 
     % -------------------------------------------------------------------------
@@ -90,11 +91,19 @@ to_json(Req, State) ->
     From__ = if (is_boolean(From_)) -> ?ZERO; (true) -> From_ end,
     To__   = if (is_boolean(To_  )) -> ?ZERO; (true) -> To_   end,
 
-    if (DebugLogEnabled) -> logger:debug(
-        binary:bin_to_list(?FROM) ++ ?EQUALS ++ binary:bin_to_list(From__)
-     ++ ?SPACE?V_BAR?SPACE
-     ++ binary:bin_to_list(?TO  ) ++ ?EQUALS ++ binary:bin_to_list(To__  )
-    ); (true) -> false end,
+    if (DebugLogEnabled) ->
+        FROM___ = binary:bin_to_list(?FROM ),
+        From___ = binary:bin_to_list(From__),
+        TO___   = binary:bin_to_list(?TO   ),
+        To___   = binary:bin_to_list(To__  ),
+
+        logger:debug(               FROM___ ++ ?EQUALS ++ From___
+           ++ ?SPACE?V_BAR?SPACE ++ TO___   ++ ?EQUALS ++ To___),
+
+        syslog:log  (Syslog, debug, FROM___ ++ ?EQUALS ++ From___
+           ++ ?SPACE?V_BAR?SPACE ++ TO___   ++ ?EQUALS ++ To___);
+       (true) -> false
+    end,
 
     From = try binary_to_integer(From__) catch error:badarg -> 0 end,
     To   = try binary_to_integer(To__  ) catch error:badarg -> 0 end,
