@@ -98,12 +98,12 @@ get_settings_() ->
         if ((ServerPort__ >= ?MIN_PORT)
         and (ServerPort__ =< ?MAX_PORT)) -> ServerPort__;
            (true) ->
-            io:put_chars(?ERR_PORT_VALID_MUST_BE_POSITIVE_INT), io:nl(),
+            logger:error(?ERR_PORT_VALID_MUST_BE_POSITIVE_INT),
 
             ?DEF_PORT
         end;
        (true) ->
-        io:put_chars(?ERR_PORT_VALID_MUST_BE_POSITIVE_INT), io:nl(),
+        logger:error(?ERR_PORT_VALID_MUST_BE_POSITIVE_INT),
 
         ?DEF_PORT
     end,
