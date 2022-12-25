@@ -45,13 +45,13 @@ One may consider this project has to be suitable for a wide variety of applied a
 
 ## Building
 
-The microservice is known to be built and run successfully under **Ubuntu Server (Ubuntu 22.04.1 LTS x86-64)** and **Arch Linux**. Install the necessary dependencies (`erlang-nox`, `rebar3`, `make`, `docker.io`):
+The microservice is known to be built and run successfully under **Ubuntu Server (Ubuntu 22.04.1 LTS x86-64)** and **Arch Linux**. Install the necessary dependencies (`erlang-nox`, `erlang-dev`, `rebar3`, `make`, `docker.io`):
 
 * In Ubuntu Server:
 
 ```
 $ sudo apt-get update && \
-  sudo apt-get install erlang-nox make docker.io -y
+  sudo apt-get install erlang-nox erlang-dev make docker.io -y
 ...
 ```
 
@@ -106,13 +106,18 @@ $ rebar3 tree
 ===> Verifying dependencies...
 ===> Fetching cowboy v2.9.0
 ===> Fetching jsx v3.1.0
+===> Fetching syslog v1.1.0
+===> Fetching pc v1.14.0
+===> Analyzing applications...
+===> Compiling pc
 ===> Fetching cowlib v2.11.0
 ===> Fetching ranch v1.8.0
 └─ bus─0.2.0 (project app)
    ├─ cowboy─2.9.0 (hex package)
    │  ├─ cowlib─2.11.0 (hex package)
    │  └─ ranch─1.8.0 (hex package)
-   └─ jsx─3.1.0 (hex package)
+   ├─ jsx─3.1.0 (hex package)
+   └─ syslog─1.1.0 (hex package)
 ```
 
 ## Running
