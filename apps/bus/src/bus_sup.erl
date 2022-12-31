@@ -24,15 +24,13 @@
 
 -export([start_link/0, init/1]).
 
--define(SERVER, ?MODULE).
-
 %% ----------------------------------------------------------------------------
 %% @doc Creates the supervisor process as part of a supervision tree.
 %%
 %% @returns The `ok' tuple containing the PID of the supervisor created
 %%          and the `State' indicator (defaults to an empty list).
 start_link() ->
-    supervisor:start_link({local, ?SERVER}, ?MODULE, []).
+    supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 %% ----------------------------------------------------------------------------
 %% @doc The supervisor initialization callback.
