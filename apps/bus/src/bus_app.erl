@@ -1,12 +1,12 @@
 %
 % apps/bus/src/bus_app.erl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.2.0
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.2.9
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
 % =============================================================================
-% Copyright (C) 2022 Radislav (Radicchio) Golubtsov
+% Copyright (C) 2022-2023 Radislav (Radicchio) Golubtsov
 %
 % (See the LICENSE file at the top of the source tree.)
 %
@@ -14,7 +14,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc The callback module of the application.
 %%
-%% @version 0.2.0
+%% @version 0.2.9
 %% @since   0.0.1
 %% @end
 %% ----------------------------------------------------------------------------
@@ -22,7 +22,7 @@
 
 -behavior(application).
 
--export([start/2, stop/1]).
+-export([start/2, prep_stop/1, stop/1]).
 
 -include("bus_helper.hrl").
 
@@ -33,8 +33,8 @@
 %% @param _StartType The atom `normal'.
 %% @param _StartArgs The list of start arguments.
 %%
-%% @returns The tuple containing the PID of the top supervisor
-%%          and the `State' indicator (defaults to an empty list).
+%% @returns The `ok' tuple containing the PID of the top supervisor
+%%          and the `State' value that holds the Syslog handle.
 start(_StartType, _StartArgs) ->
     % Getting the application settings.
     Settings = get_settings_(),
@@ -79,17 +79,32 @@ start(_StartType, _StartArgs) ->
         Syslog
     }),
 
-    bus_sup:start_link().
+    {ok, Pid} = bus_sup:start_link(),
+
+    {ok, Pid, Syslog}. % <== Syslog will be returned as the value of State.
+
+%% ----------------------------------------------------------------------------
+%% @doc The application preparing-to-termination callback.
+%%      Gets called just before the application is about to be stopped.
+%%
+%% @param _State The `State' value, as returned from the `start' callback.
+%%
+%% @returns The `State' value that holds the atom `ok'.
+prep_stop(_State) ->
+    logger:info(              ?MSG_SERVER_STOPPED),
+    syslog:log (_State, info, ?MSG_SERVER_STOPPED),
+
+    syslog:close(_State),
+
+    ok = cowboy:stop_listener(bus_listener).
 
 %% ----------------------------------------------------------------------------
 %% @doc The application termination callback.
 %%      Gets called after the application has been stopped.
 %%
-%% @param _State The `State' indicator, as returned from the `start' callback.
+%% @param _State The `State' value, as returned from the `prep_stop' callback.
 stop(_State) ->
-    logger:info(?MSG_SERVER_STOPPED),
-
-    ok = cowboy:stop_listener(bus_listener).
+    ok.
 
 % -----------------------------------------------------------------------------
 % Helper function. Used to get the application settings.

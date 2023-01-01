@@ -1,12 +1,12 @@
 %
 % apps/bus/src/bus_sup.erl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.2.0
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.2.9
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
 % =============================================================================
-% Copyright (C) 2022 Radislav (Radicchio) Golubtsov
+% Copyright (C) 2022-2023 Radislav (Radicchio) Golubtsov
 %
 % (See the LICENSE file at the top of the source tree.)
 %
@@ -14,7 +14,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc The supervisor module of the application.
 %%
-%% @version 0.2.0
+%% @version 0.2.9
 %% @since   0.0.1
 %% @end
 %% ----------------------------------------------------------------------------
@@ -24,15 +24,13 @@
 
 -export([start_link/0, init/1]).
 
--define(SERVER, ?MODULE).
-
 %% ----------------------------------------------------------------------------
 %% @doc Creates the supervisor process as part of a supervision tree.
 %%
 %% @returns The `ok' tuple containing the PID of the supervisor created
 %%          and the `State' indicator (defaults to an empty list).
 start_link() ->
-    supervisor:start_link({local, ?SERVER}, ?MODULE, []).
+    supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 %% ----------------------------------------------------------------------------
 %% @doc The supervisor initialization callback.
