@@ -193,16 +193,16 @@ $ curl 'http://localhost:8765/route/direct?from=82&to=35390'
 
 ### Logging
 
-The microservice has the ability to log messages to a logfile and to the Unix syslog facility. When running under Ubuntu Server, logs can be seen and analyzed in an ordinary fashion, by `tail`ing the `_build/prod/rel/bus/log/bus.log` logfile:
+The microservice has the ability to log messages to a logfile and to the Unix syslog facility. When running under Ubuntu Server or Arch Linux, logs can be seen and analyzed in an ordinary fashion, by `tail`ing the `_build/prod/rel/bus/log/bus.log` logfile:
 
 ```
 $ tail -f _build/prod/rel/bus/log/bus.log
 ...
-[2022-12-29|23:38:55.760348+03:00][info]  Server started on port 8765
-[2022-12-29|23:38:55.761282+03:00][info]  Application: bus. Started at: bus@localhost.
-[2022-12-29|23:39:42.232595+03:00][debug]  from=4838 | to=524987
-[2022-12-29|23:40:04.529666+03:00][debug]  from=82 | to=35390
-[2022-12-29|23:40:36.591935+03:00][info]  Server stopped
+[2023-01-01|22:55:23.383368+03:00][info]  Server started on port 8765
+[2023-01-01|22:55:23.384917+03:00][info]  Application: bus. Started at: bus@localhost.
+[2023-01-01|22:55:35.911539+03:00][debug]  from=4838 | to=524987
+[2023-01-01|22:55:40.105887+03:00][debug]  from=82 | to=35390
+[2023-01-01|23:00:11.515084+03:00][info]  Server stopped
 ```
 
 Messages registered by the Unix system logger can be seen and analyzed using the `journalctl` utility:
@@ -210,9 +210,11 @@ Messages registered by the Unix system logger can be seen and analyzed using the
 ```
 $ journalctl -f
 ...
-Dec 29 23:38:55 <hostname> bus[<pid>]: Server started on port 8765
-Dec 29 23:39:42 <hostname> bus[<pid>]: from=4838 | to=524987
-Dec 29 23:40:04 <hostname> bus[<pid>]: from=82 | to=35390
+Jan 01 22:55:22 <hostname> bus[<pid>]: Starting up
+Jan 01 22:55:23 <hostname> bus[<pid>]: Server started on port 8765
+Jan 01 22:55:35 <hostname> bus[<pid>]: from=4838 | to=524987
+Jan 01 22:55:40 <hostname> bus[<pid>]: from=82 | to=35390
+Jan 01 23:00:11 <hostname> bus[<pid>]: Server stopped
 ```
 
 ### Error handling
