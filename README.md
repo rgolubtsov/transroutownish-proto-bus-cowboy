@@ -39,7 +39,10 @@ One may consider this project has to be suitable for a wide variety of applied a
 ## Table of Contents
 
 * **[Building](#building)**
+  * **[Creating a Docker image](#creating-a-docker-image)**
 * **[Running](#running)**
+  * **[Running a Docker image](#running-a-docker-image)**
+  * **[Exploring a Docker image payload](#exploring-a-docker-image-payload)**
 * **[Consuming](#consuming)**
   * **[Logging](#logging)**
   * **[Error handling](#error-handling)**
@@ -121,6 +124,19 @@ $ rebar3 tree
    └─ syslog─1.1.0 (hex package)
 ```
 
+### Creating a Docker image
+
+**Build** a Docker image for the microservice:
+
+```
+$ # Pull the Erlang image first, if not already there:
+$ sudo docker pull erlang:alpine
+...
+$ # Then build the microservice image:
+$ sudo docker build -ttransroutownish/buscow .
+...
+```
+
 ## Running
 
 **Run** the microservice using its startup script along with the `foreground` command, that is meant "*Start release with output to stdout*":
@@ -165,6 +181,34 @@ $ ./_build/prod/rel/bus/bin/bus daemon; echo $?
 ```
 
 The `daemon_attach` command then allows connecting to the microservice to make interactions with them. But the latter is not required at all regarding the true purpose of the microservice. And it can be stopped again with the `stop` command in the same terminal session.
+
+### Running a Docker image
+
+**Run** a Docker image of the microservice, deleting all stopped containers prior to that:
+
+```
+$ sudo docker rm `sudo docker ps -aq` && \
+  export PORT=8765 && sudo docker run -dp${PORT}:${PORT} --name buscow transroutownish/buscow; echo $?
+...
+```
+
+### Exploring a Docker image payload
+
+The following is not necessary but might be considered interesting &mdash; to look up into the running container, and check out that the microservice's startup script, application BEAMs, log, and routes data store are at their expected places and in effect:
+
+```
+$ sudo docker ps -a
+CONTAINER ID   IMAGE                    COMMAND                    CREATED             STATUS             PORTS                                       NAMES
+<container_id> transroutownish/buscow   "bus/bin/bus foregro..."   About an hour ago   Up About an hour   0.0.0.0:8765->8765/tcp, :::8765->8765/tcp   buscow
+$
+$ sudo docker exec -it buscow sh; echo $?
+/var/tmp $
+/var/tmp $ bus/erts-13.1.3/bin/erl -version
+Erlang (SMP,ASYNC_THREADS) (BEAM) emulator version 13.1.3
+/var/tmp $
+/var/tmp $ exit # Or simply <Ctrl-D>.
+0
+```
 
 ## Consuming
 
