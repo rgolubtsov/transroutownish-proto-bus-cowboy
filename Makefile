@@ -1,12 +1,12 @@
 #
 # Makefile
 # =============================================================================
-# Urban bus routing microservice prototype (Erlang/OTP port). Version 0.2.9
+# Urban bus routing microservice prototype (Erlang/OTP port). Version 0.3.0
 # =============================================================================
 # An Erlang/OTP application, designed and intended to be run as a microservice,
 # implementing a simple urban bus routing prototype.
 # =============================================================================
-# Copyright (C) 2021-2023 Radislav (Radicchio) Golubtsov
+# Copyright (C) 2022-2023 Radislav (Radicchio) Golubtsov
 #
 # (See the LICENSE file at the top of the source tree.)
 #
