@@ -206,6 +206,74 @@ $ sudo docker exec -it buscow sh; echo $?
 /var/tmp $ bus/erts-13.1.3/bin/erl -version
 Erlang (SMP,ASYNC_THREADS) (BEAM) emulator version 13.1.3
 /var/tmp $
+/var/tmp $ ls -al
+total 20
+drwxrwxrwt    1 root     root          4096 Jan  9 22:12 .
+drwxr-xr-x    1 root     root          4096 Jan  9 12:46 ..
+drwxr-xr-x    1 daemon   daemon        4096 Jan  9 22:30 bus
+/var/tmp $
+/var/tmp $ ls -al bus/
+total 32
+drwxr-xr-x    1 daemon   daemon        4096 Jan  9 22:30 .
+drwxrwxrwt    1 root     root          4096 Jan  9 22:12 ..
+drwxr-xr-x    2 daemon   daemon        4096 Jan  9 22:11 bin
+drwxr-xr-x    3 daemon   daemon        4096 Jan  9 22:11 erts-13.1.3
+drwxr-xr-x   14 daemon   daemon        4096 Jan  9 22:11 lib
+drwxr-xr-x    2 daemon   daemon        4096 Jan  9 22:30 log
+drwxr-xr-x    3 daemon   daemon        4096 Jan  9 22:11 releases
+/var/tmp $
+/var/tmp $ ls -al bus/bin/ bus/lib/bus-0.3.0/ebin/ bus/lib/bus-0.3.0/priv/data/ bus/log/
+bus/bin/:
+total 112
+drwxr-xr-x    2 daemon   daemon        4096 Jan  9 22:11 .
+drwxr-xr-x    1 daemon   daemon        4096 Jan  9 22:30 ..
+-rwxr-xr-x    1 daemon   daemon       35983 Jan  9 22:11 bus
+-rwxr-xr-x    1 daemon   daemon       35983 Jan  9 22:11 bus-0.3.0
+-rw-r--r--    1 daemon   daemon       14214 Jan  9 22:11 install_upgrade.escript
+-rw-r--r--    1 daemon   daemon        7013 Jan  9 22:11 no_dot_erlang.boot
+-rw-r--r--    1 daemon   daemon        7560 Jan  9 22:11 nodetool
+
+bus/lib/bus-0.3.0/ebin/:
+total 28
+drwxr-xr-x    2 daemon   daemon        4096 Jan  9 22:11 .
+drwxr-xr-x    4 daemon   daemon        4096 Jan  9 22:11 ..
+-rw-r--r--    1 daemon   daemon         607 Jan  9 22:11 bus.app
+-rw-r--r--    1 daemon   daemon        1807 Jan  9 22:11 bus_app.beam
+-rw-r--r--    1 daemon   daemon        1001 Jan  9 22:11 bus_controller.beam
+-rw-r--r--    1 daemon   daemon        1713 Jan  9 22:11 bus_handler.beam
+-rw-r--r--    1 daemon   daemon         517 Jan  9 22:11 bus_sup.beam
+
+bus/lib/bus-0.3.0/priv/data/:
+total 56
+drwxr-xr-x    2 daemon   daemon        4096 Jan  9 22:11 .
+drwxr-xr-x    3 daemon   daemon        4096 Jan  9 22:11 ..
+-rw-rw-r--    1 daemon   daemon       46218 May 26  2022 routes.txt
+
+bus/log/:
+total 16
+drwxr-xr-x    2 daemon   daemon        4096 Jan  9 22:30 .
+drwxr-xr-x    1 daemon   daemon        4096 Jan  9 22:30 ..
+-rw-r--r--    1 daemon   daemon        5478 Jan  9 22:30 bus.log
+/var/tmp $
+/var/tmp $ netstat -plunt
+netstat: showing only processes with your user ID
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:4369            0.0.0.0:*               LISTEN      51/epmd
+tcp        0      0 0.0.0.0:38911           0.0.0.0:*               LISTEN      1/bus
+tcp        0      0 0.0.0.0:8765            0.0.0.0:*               LISTEN      1/bus
+tcp        0      0 :::4369                 :::*                    LISTEN      51/epmd
+/var/tmp $
+/var/tmp $ ps ax
+PID   USER     TIME  COMMAND
+    1 daemon    0:03 {beam.smp} /var/tmp/bus/bin/bus -Bd -K true -A30 -- -root /var/tmp/bus -bindir /var/...
+   51 daemon    0:00 /var/tmp/bus/erts-13.1.3/bin/epmd -daemon
+   79 daemon    0:00 [epmd]
+   80 daemon    0:00 [epmd]
+  113 daemon    0:00 erl_child_setup 1048576
+  132 daemon    0:00 sh
+  145 daemon    0:00 ps ax
+/var/tmp $
 /var/tmp $ exit # Or simply <Ctrl-D>.
 0
 ```
