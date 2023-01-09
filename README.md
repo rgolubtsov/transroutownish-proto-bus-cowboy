@@ -187,7 +187,7 @@ The `daemon_attach` command then allows connecting to the microservice to make i
 **Run** a Docker image of the microservice, deleting all stopped containers prior to that:
 
 ```
-$ sudo docker rm `sudo docker ps -aq` && \
+$ sudo docker rm `sudo docker ps -aq`; \
   export PORT=8765 && sudo docker run -dp${PORT}:${PORT} --name buscow transroutownish/buscow; echo $?
 ...
 ```
