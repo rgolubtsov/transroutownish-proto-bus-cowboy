@@ -203,76 +203,76 @@ CONTAINER ID   IMAGE                    COMMAND                    CREATED      
 $
 $ sudo docker exec -it buscow sh; echo $?
 /var/tmp $
-/var/tmp $ bus/erts-13.1.3/bin/erl -version
-Erlang (SMP,ASYNC_THREADS) (BEAM) emulator version 13.1.3
+/var/tmp $ bus/erts-14.0.2/bin/erl -version
+Erlang (SMP,ASYNC_THREADS) (BEAM) emulator version 14.0.2
 /var/tmp $
 /var/tmp $ ls -al
 total 20
-drwxrwxrwt    1 root     root          4096 Jan  9 22:12 .
+drwxrwxrwt    1 root     root          4096 Jul  7 19:16 .
 drwxr-xr-x    1 root     root          4096 Jan  9 12:46 ..
-drwxr-xr-x    1 daemon   daemon        4096 Jan  9 22:30 bus
+drwxr-xr-x    1 daemon   daemon        4096 Jul  7 19:20 bus
 /var/tmp $
 /var/tmp $ ls -al bus/
 total 32
-drwxr-xr-x    1 daemon   daemon        4096 Jan  9 22:30 .
-drwxrwxrwt    1 root     root          4096 Jan  9 22:12 ..
-drwxr-xr-x    2 daemon   daemon        4096 Jan  9 22:11 bin
-drwxr-xr-x    3 daemon   daemon        4096 Jan  9 22:11 erts-13.1.3
-drwxr-xr-x   14 daemon   daemon        4096 Jan  9 22:11 lib
-drwxr-xr-x    2 daemon   daemon        4096 Jan  9 22:30 log
-drwxr-xr-x    3 daemon   daemon        4096 Jan  9 22:11 releases
+drwxr-xr-x    1 daemon   daemon        4096 Jul  7 19:20 .
+drwxrwxrwt    1 root     root          4096 Jul  7 19:16 ..
+drwxr-xr-x    2 daemon   daemon        4096 Jul  7 19:16 bin
+drwxr-xr-x    3 daemon   daemon        4096 Jul  7 19:16 erts-14.0.2
+drwxr-xr-x   14 daemon   daemon        4096 Jul  7 19:16 lib
+drwxr-xr-x    2 daemon   daemon        4096 Jul  7 19:20 log
+drwxr-xr-x    3 daemon   daemon        4096 Jul  7 19:16 releases
 /var/tmp $
-/var/tmp $ ls -al bus/bin/ bus/lib/bus-0.3.0/ebin/ bus/lib/bus-0.3.0/priv/data/ bus/log/
+/var/tmp $ ls -al bus/bin/ bus/lib/bus-0.3.2/ebin/ bus/lib/bus-0.3.2/priv/data/ bus/log/
 bus/bin/:
 total 112
-drwxr-xr-x    2 daemon   daemon        4096 Jan  9 22:11 .
-drwxr-xr-x    1 daemon   daemon        4096 Jan  9 22:30 ..
--rwxr-xr-x    1 daemon   daemon       35983 Jan  9 22:11 bus
--rwxr-xr-x    1 daemon   daemon       35983 Jan  9 22:11 bus-0.3.0
--rw-r--r--    1 daemon   daemon       14214 Jan  9 22:11 install_upgrade.escript
--rw-r--r--    1 daemon   daemon        7013 Jan  9 22:11 no_dot_erlang.boot
--rw-r--r--    1 daemon   daemon        7560 Jan  9 22:11 nodetool
+drwxr-xr-x    2 daemon   daemon        4096 Jul  7 19:16 .
+drwxr-xr-x    1 daemon   daemon        4096 Jul  7 19:20 ..
+-rwxr-xr-x    1 daemon   daemon       35983 Jul  7 19:16 bus
+-rwxr-xr-x    1 daemon   daemon       35983 Jul  7 19:16 bus-0.3.2
+-rw-r--r--    1 daemon   daemon       14214 Jul  7 19:16 install_upgrade.escript
+-rw-r--r--    1 daemon   daemon        6681 Jul  7 19:16 no_dot_erlang.boot
+-rw-r--r--    1 daemon   daemon        7560 Jul  7 19:16 nodetool
 
-bus/lib/bus-0.3.0/ebin/:
+bus/lib/bus-0.3.2/ebin/:
 total 28
-drwxr-xr-x    2 daemon   daemon        4096 Jan  9 22:11 .
-drwxr-xr-x    4 daemon   daemon        4096 Jan  9 22:11 ..
--rw-r--r--    1 daemon   daemon         607 Jan  9 22:11 bus.app
--rw-r--r--    1 daemon   daemon        1807 Jan  9 22:11 bus_app.beam
--rw-r--r--    1 daemon   daemon        1001 Jan  9 22:11 bus_controller.beam
--rw-r--r--    1 daemon   daemon        1713 Jan  9 22:11 bus_handler.beam
--rw-r--r--    1 daemon   daemon         517 Jan  9 22:11 bus_sup.beam
+drwxr-xr-x    2 daemon   daemon        4096 Jul  7 19:16 .
+drwxr-xr-x    4 daemon   daemon        4096 Jul  7 19:16 ..
+-rw-r--r--    1 daemon   daemon         607 Jul  7 19:16 bus.app
+-rw-r--r--    1 daemon   daemon        1808 Jul  7 19:16 bus_app.beam
+-rw-r--r--    1 daemon   daemon         989 Jul  7 19:16 bus_controller.beam
+-rw-r--r--    1 daemon   daemon        1704 Jul  7 19:16 bus_handler.beam
+-rw-r--r--    1 daemon   daemon         512 Jul  7 19:16 bus_sup.beam
 
-bus/lib/bus-0.3.0/priv/data/:
+bus/lib/bus-0.3.2/priv/data/:
 total 56
-drwxr-xr-x    2 daemon   daemon        4096 Jan  9 22:11 .
-drwxr-xr-x    3 daemon   daemon        4096 Jan  9 22:11 ..
+drwxr-xr-x    2 daemon   daemon        4096 Jul  7 19:16 .
+drwxr-xr-x    3 daemon   daemon        4096 Jul  7 19:16 ..
 -rw-rw-r--    1 daemon   daemon       46218 May 26  2022 routes.txt
 
 bus/log/:
 total 16
-drwxr-xr-x    2 daemon   daemon        4096 Jan  9 22:30 .
-drwxr-xr-x    1 daemon   daemon        4096 Jan  9 22:30 ..
--rw-r--r--    1 daemon   daemon        5478 Jan  9 22:30 bus.log
+drwxr-xr-x    2 daemon   daemon        4096 Jul  7 19:20 .
+drwxr-xr-x    1 daemon   daemon        4096 Jul  7 19:20 ..
+-rw-r--r--    1 daemon   daemon        5478 Jul  7 19:20 bus.log
 /var/tmp $
 /var/tmp $ netstat -plunt
 netstat: showing only processes with your user ID
 Active Internet connections (only servers)
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
-tcp        0      0 0.0.0.0:4369            0.0.0.0:*               LISTEN      51/epmd
-tcp        0      0 0.0.0.0:38911           0.0.0.0:*               LISTEN      1/bus
+tcp        0      0 0.0.0.0:4369            0.0.0.0:*               LISTEN      50/epmd
+tcp        0      0 0.0.0.0:32997           0.0.0.0:*               LISTEN      1/bus
 tcp        0      0 0.0.0.0:8765            0.0.0.0:*               LISTEN      1/bus
-tcp        0      0 :::4369                 :::*                    LISTEN      51/epmd
+tcp        0      0 :::4369                 :::*                    LISTEN      50/epmd
 /var/tmp $
 /var/tmp $ ps ax
 PID   USER     TIME  COMMAND
     1 daemon    0:03 {beam.smp} /var/tmp/bus/bin/bus -Bd -K true -A30 -- -root /var/tmp/bus -bindir /var/...
-   51 daemon    0:00 /var/tmp/bus/erts-13.1.3/bin/epmd -daemon
+   50 daemon    0:00 /var/tmp/bus/erts-14.0.2/bin/epmd -daemon
+   78 daemon    0:00 [epmd]
    79 daemon    0:00 [epmd]
-   80 daemon    0:00 [epmd]
-  113 daemon    0:00 erl_child_setup 1048576
-  132 daemon    0:00 sh
-  145 daemon    0:00 ps ax
+  112 daemon    0:00 erl_child_setup 1048576
+  131 daemon    0:00 sh
+  143 daemon    0:00 ps ax
 /var/tmp $
 /var/tmp $ exit # Or simply <Ctrl-D>.
 0
@@ -310,11 +310,11 @@ The microservice has the ability to log messages to a logfile and to the Unix sy
 ```
 $ tail -f _build/prod/rel/bus/log/bus.log
 ...
-[2023-01-01|22:55:23.383368+03:00][info]  Server started on port 8765
-[2023-01-01|22:55:23.384917+03:00][info]  Application: bus. Started at: bus@localhost.
-[2023-01-01|22:55:35.911539+03:00][debug]  from=4838 | to=524987
-[2023-01-01|22:55:40.105887+03:00][debug]  from=82 | to=35390
-[2023-01-01|23:00:11.515084+03:00][info]  Server stopped
+[2023-07-07|23:25:15.443954+03:00][info]  Server started on port 8765
+[2023-07-07|23:25:15.445469+03:00][info]  Application: bus. Started at: bus@localhost.
+[2023-07-07|23:25:30.911540+03:00][debug]  from=4838 | to=524987
+[2023-07-07|23:25:40.105888+03:00][debug]  from=82 | to=35390
+[2023-07-07|23:30:10.904381+03:00][info]  Server stopped
 ```
 
 Messages registered by the Unix system logger can be seen and analyzed using the `journalctl` utility:
@@ -322,11 +322,11 @@ Messages registered by the Unix system logger can be seen and analyzed using the
 ```
 $ journalctl -f
 ...
-Jan 01 22:55:22 <hostname> bus[<pid>]: Starting up
-Jan 01 22:55:23 <hostname> bus[<pid>]: Server started on port 8765
-Jan 01 22:55:35 <hostname> bus[<pid>]: from=4838 | to=524987
-Jan 01 22:55:40 <hostname> bus[<pid>]: from=82 | to=35390
-Jan 01 23:00:11 <hostname> bus[<pid>]: Server stopped
+Jul 07 23:25:14 <hostname> bus[<pid>]: Starting up
+Jul 07 23:25:15 <hostname> bus[<pid>]: Server started on port 8765
+Jul 07 23:25:30 <hostname> bus[<pid>]: from=4838 | to=524987
+Jul 07 23:25:40 <hostname> bus[<pid>]: from=82 | to=35390
+Jul 07 23:30:10 <hostname> bus[<pid>]: Server stopped
 ```
 
 Inside the running container logs might be queried also by `tail`ing the `bus/log/bus.log` logfile:
@@ -334,10 +334,10 @@ Inside the running container logs might be queried also by `tail`ing the `bus/lo
 ```
 /var/tmp $ tail -f bus/log/bus.log
 ...
-[2023-01-10|19:50:40.261310+00:00][info]  Server started on port 8765
-[2023-01-10|19:50:40.261804+00:00][info]  Application: bus. Started at: bus@<container_id>.
-[2023-01-10|20:20:40.573194+00:00][debug]  from=4838 | to=524987
-[2023-01-10|20:20:46.973889+00:00][debug]  from=82 | to=35390
+[2023-07-07|19:20:15.525769+00:00][info]  Server started on port 8765
+[2023-07-07|19:20:15.526437+00:00][info]  Application: bus. Started at: bus@<container_id>.
+[2023-07-07|19:20:30.573195+00:00][debug]  from=4838 | to=524987
+[2023-07-07|19:20:40.973890+00:00][debug]  from=82 | to=35390
 ```
 
 And of course Docker itself gives the possibility to read log messages by using the corresponding command for that:
@@ -345,12 +345,12 @@ And of course Docker itself gives the possibility to read log messages by using 
 ```
 $ sudo docker logs -f buscow
 ...
-[2023-01-10|19:50:40.261310+00:00][info]  Server started on port 8765
-[2023-01-10|19:50:40.261804+00:00][info]  Application: bus. Started at: bus@<container_id>.
-[2023-01-10|20:20:40.573194+00:00][debug]  from=4838 | to=524987
-[2023-01-10|20:20:46.973889+00:00][debug]  from=82 | to=35390
-[2023-01-10|20:30:08.307102+00:00][notice]  SIGTERM received - shutting down
-[2023-01-10|20:30:08.308780+00:00][info]  Server stopped
+[2023-07-07|19:20:15.525769+00:00][info]  Server started on port 8765
+[2023-07-07|19:20:15.526437+00:00][info]  Application: bus. Started at: bus@<container_id>.
+[2023-07-07|19:20:30.573195+00:00][debug]  from=4838 | to=524987
+[2023-07-07|19:20:40.973890+00:00][debug]  from=82 | to=35390
+[2023-07-07|19:20:50.576683+00:00][notice]  SIGTERM received - shutting down
+[2023-07-07|19:20:50.578264+00:00][info]  Server stopped
 ```
 
 ### Error handling
