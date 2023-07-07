@@ -108,17 +108,17 @@ The following command given is for demonstrational purposes only &mdash; Rebar3 
 ```
 $ rebar3 tree
 ===> Verifying dependencies...
-===> Fetching cowboy v2.9.0
+===> Fetching cowboy v2.10.0
 ===> Fetching jsx v3.1.0
 ===> Fetching syslog v1.1.0
 ===> Fetching pc v1.14.0
 ===> Analyzing applications...
 ===> Compiling pc
-===> Fetching cowlib v2.11.0
+===> Fetching cowlib v2.12.1
 ===> Fetching ranch v1.8.0
 └─ bus─0.3.0 (project app)
-   ├─ cowboy─2.9.0 (hex package)
-   │  ├─ cowlib─2.11.0 (hex package)
+   ├─ cowboy─2.10.0 (hex package)
+   │  ├─ cowlib─2.12.1 (hex package)
    │  └─ ranch─1.8.0 (hex package)
    ├─ jsx─3.1.0 (hex package)
    └─ syslog─1.1.0 (hex package)
