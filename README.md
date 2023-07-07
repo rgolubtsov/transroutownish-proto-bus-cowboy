@@ -116,7 +116,7 @@ $ rebar3 tree
 ===> Compiling pc
 ===> Fetching cowlib v2.12.1
 ===> Fetching ranch v1.8.0
-└─ bus─0.3.0 (project app)
+└─ bus─0.3.2 (project app)
    ├─ cowboy─2.10.0 (hex package)
    │  ├─ cowlib─2.12.1 (hex package)
    │  └─ ranch─1.8.0 (hex package)
