@@ -1,7 +1,7 @@
 %
 % apps/bus/src/bus_handler.erl
 % =============================================================================
-% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.3.2
+% Urban bus routing microservice prototype (Erlang/OTP port). Version 0.3.4
 % =============================================================================
 % An Erlang/OTP application, designed and intended to be run as a microservice,
 % implementing a simple urban bus routing prototype.
@@ -14,7 +14,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc The request handler module of the application.
 %%
-%% @version 0.3.2
+%% @version 0.3.4
 %% @since   0.1.0
 %% @end
 %% ----------------------------------------------------------------------------
@@ -33,7 +33,9 @@
 %%      Used to process the incoming request and send the response.
 %%
 %% @param Req   The incoming HTTP request object.
-%% @param State TODO: Provide the description of the `State' param.
+%% @param State The so-called "state" of the HTTP request.
+%%              This can be any data, payload passed with the request
+%%              and used somehow during processing the request.
 %%
 %% @returns The `cowboy_rest' tuple containing the request object
 %%          along with the state of the request.
@@ -47,7 +49,9 @@ init(Req, State) ->
 %%      when one of the `HEAD', `GET', or `OPTIONS' methods is used.
 %%
 %% @param Req   The incoming HTTP request object.
-%% @param State TODO: Provide the description of the `State' param.
+%% @param State The so-called "state" of the HTTP request.
+%%              This can be any data, payload passed with the request
+%%              and used somehow during processing the request.
 %%
 %% @returns The list of media types the microservice provides when responding
 %%          to the client. The special callback then will be called for any
@@ -63,7 +67,9 @@ content_types_provided(Req, State) ->
 %% @doc The so-called `ProvideCallback', used to return the response body.
 %%
 %% @param Req   The incoming HTTP request object.
-%% @param State TODO: Provide the description of the `State' param.
+%% @param State The so-called "state" of the HTTP request.
+%%              This can be any data, payload passed with the request
+%%              and used somehow during processing the request.
 %%
 %% @returns The body of the response in the JSON representation,
 %%          containing the following properties:
