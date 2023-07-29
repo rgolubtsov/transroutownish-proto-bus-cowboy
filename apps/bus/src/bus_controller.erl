@@ -72,12 +72,11 @@ startup(Args) ->
         end,
 
         init:stop(?EXIT_FAILURE);
-       (true) -> false
-    end,
+       (true) ->
+        ServerPort_ = integer_to_list(ServerPort),
 
-    ServerPort_ = integer_to_list(ServerPort),
-
-    logger:info(              ?MSG_SERVER_STARTED ++ ServerPort_),
-    syslog:log (Syslog, info, ?MSG_SERVER_STARTED ++ ServerPort_).
+        logger:info(              ?MSG_SERVER_STARTED ++ ServerPort_),
+        syslog:log (Syslog, info, ?MSG_SERVER_STARTED ++ ServerPort_)
+    end.
 
 % vim:set nu et ts=4 sw=4:
