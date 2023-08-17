@@ -338,12 +338,16 @@ Inside the running container logs might be queried also by `tail`ing the `bus/lo
 ```
 /var/tmp # tail -f bus/log/bus.log
 ...
-[2023-07-07|19:20:15.525769+00:00][info]  Server started on port 8765
-[2023-07-07|19:20:15.526437+00:00][info]  Application: bus. Started at: bus@<container_id>.
-[2023-07-07|19:20:30.573195+00:00][debug]  from=4838 | to=524987
-[2023-07-07|19:20:40.973890+00:00][debug]  from=82 | to=35390
-[2023-07-07|19:20:50.576683+00:00][notice]  SIGTERM received - shutting down
-[2023-07-07|19:20:50.578264+00:00][info]  Server stopped
+[2023-08-17|15:50:22.070820+00:00][info]  Server started on port 8765
+[2023-08-17|15:50:22.071200+00:00][info]  Application: bus. Started at: bus@<container_id>.
+[2023-08-17|15:55:17.291895+00:00][debug]  from=4838 | to=524987
+[2023-08-17|15:55:17.292267+00:00][debug]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+...
+[2023-08-17|15:55:37.259628+00:00][debug]  from=82 | to=35390
+[2023-08-17|15:55:37.259995+00:00][debug]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+...
+[2023-08-17|16:00:07.422522+00:00][notice]  SIGTERM received - shutting down
+[2023-08-17|16:00:07.423848+00:00][info]  Server stopped
 ```
 
 And of course Docker itself gives the possibility to read log messages by using the corresponding command for that:
@@ -351,12 +355,16 @@ And of course Docker itself gives the possibility to read log messages by using 
 ```
 $ sudo docker logs -f buscow
 ...
-[2023-07-07|19:20:15.525769+00:00][info]  Server started on port 8765
-[2023-07-07|19:20:15.526437+00:00][info]  Application: bus. Started at: bus@<container_id>.
-[2023-07-07|19:20:30.573195+00:00][debug]  from=4838 | to=524987
-[2023-07-07|19:20:40.973890+00:00][debug]  from=82 | to=35390
-[2023-07-07|19:20:50.576683+00:00][notice]  SIGTERM received - shutting down
-[2023-07-07|19:20:50.578264+00:00][info]  Server stopped
+[2023-08-17|15:50:22.070820+00:00][info]  Server started on port 8765
+[2023-08-17|15:50:22.071200+00:00][info]  Application: bus. Started at: bus@<container_id>.
+[2023-08-17|15:55:17.291895+00:00][debug]  from=4838 | to=524987
+[2023-08-17|15:55:17.292267+00:00][debug]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+...
+[2023-08-17|15:55:37.259628+00:00][debug]  from=82 | to=35390
+[2023-08-17|15:55:37.259995+00:00][debug]  1 =  1 2 3 4 5 6 7 8 9 987 11 12 13 4987 415 ...
+...
+[2023-08-17|16:00:07.422522+00:00][notice]  SIGTERM received - shutting down
+[2023-08-17|16:00:07.423848+00:00][info]  Server stopped
 ```
 
 ### Error handling
