@@ -31,7 +31,7 @@
 %%      Creates the supervision tree by starting the top supervisor.
 %%
 %% @param _StartType The atom `normal'.
-%% @param _StartArgs The list of start arguments.
+%% @param _StartArgs A list of start arguments.
 %%
 %% @returns The `ok' tuple containing the PID of the top supervisor
 %%          and the `State' value that holds the Syslog handle.
@@ -109,7 +109,7 @@ stop(_State) ->
 % -----------------------------------------------------------------------------
 % Helper function. Used to get the application settings.
 %
-% Returns: The tuple containing values of individual settings.
+% Returns: A tuple containing values of individual settings.
 get_settings_() ->
     % Retrieving the port number used to run the server -----------------------
     ServerPort_ = application:get_env(server_port),
@@ -130,7 +130,7 @@ get_settings_() ->
         ?DEF_PORT
     end,
 
-    % Identifying, whether debug logging is enabled ---------------------------
+    % Identifying whether debug logging is enabled ----------------------------
     DebugLogEnabled_ = application:get_env(logger_debug_enabled),
 
     DebugLogEnabled  = if (DebugLogEnabled_ =/= undefined) ->

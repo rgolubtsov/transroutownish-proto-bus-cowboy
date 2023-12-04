@@ -27,7 +27,7 @@
 %% ----------------------------------------------------------------------------
 %% @doc Starts up the bundled web server.
 %%
-%% @param Args The tuple containing the server port number to listen on,
+%% @param Args A tuple containing the server port number to listen on,
 %%             as the first element.
 startup(Args) ->
     ServerPort      = element(1, Args),

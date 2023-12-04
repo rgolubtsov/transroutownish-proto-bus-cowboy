@@ -53,8 +53,8 @@ init(Req, State) ->
 %%              This can be any data, payload passed with the request
 %%              and used somehow during processing the request.
 %%
-%% @returns The list of media types the microservice provides when responding
-%%          to the client. The special callback then will be called for any
+%% @returns A list of media types the microservice provides when responding
+%%          to the client. A special callback then will be called for any
 %%          appropriate request regarding the corresponding media type:
 %%          `application/json' is currently the only used one.
 content_types_provided(Req, State) ->
@@ -149,7 +149,7 @@ to_json(Req, State) ->
 %%      given is direct (i.e. contains in any of the routes), or not.
 %%
 %% @param DebugLogEnabled The debug logging enabler.
-%% @param RoutesList      The list containing all available routes.
+%% @param RoutesList      A list containing all available routes.
 %% @param From_           The starting bus stop point.
 %% @param To_             The ending   bus stop point.
 %%
