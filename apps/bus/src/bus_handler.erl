@@ -56,7 +56,7 @@ init(Req, State) ->
 %% @returns A list of media types the microservice provides when responding
 %%          to the client. A special callback then will be called for any
 %%          appropriate request regarding the corresponding media type:
-%%          `application/json' is currently the only used one.
+%%          `application/json' is currently the only one used.
 content_types_provided(Req, State) ->
     {[{{
         ?MIME_TYPE, ?MIME_SUB_TYPE, % <== content-type: application/json
